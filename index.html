@@ -406,22 +406,71 @@ async function saveSetup() {
 // ── CODE MODAL ───────────────────────────────────────────────
 function showCodeModal(code, cb) {
   var overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.style.position = 'fixed';
+  overlay.style.inset = '0';
+  overlay.style.background = 'rgba(0,0,0,.65)';
+  overlay.style.zIndex = '1000';
+  overlay.style.display = 'flex';
+  overlay.style.alignItems = 'center';
+  overlay.style.justifyContent = 'center';
+  overlay.style.padding = '20px';
   var inner = document.createElement('div');
-  inner.style.cssText = 'background:white;border-radius:28px;padding:36px;max-width:400px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);';
-  inner.innerHTML = '<div style="font-size:48px;margin-bottom:10px;">&#128273;</div>'
-    + '<h2 style="font-family:'Fredoka One',cursive;font-size:26px;color:#7B2D8B;margin-bottom:8px;">Your Save Code</h2>'
-    + '<p style="font-size:14px;color:#8C7B6B;font-weight:600;margin-bottom:20px;">Write this down or take a screenshot &#8212; use it to restore your progress on any device!</p>'
-    + '<div style="background:#F5F0FF;border:3px solid #DDD6FE;border-radius:20px;padding:20px;margin-bottom:22px;">'
-    + '<div style="font-family:'Fredoka One',cursive;font-size:52px;color:#7B2D8B;letter-spacing:8px;" id="modal-code">' + code + '</div>'
-    + '</div>'
-    + '<button id="modal-btn" style="width:100%;padding:14px;font-family:'Fredoka One',cursive;font-size:20px;color:white;background:linear-gradient(135deg,#7B2D8B,#4A1D96);border:none;border-radius:14px;cursor:pointer;">&#127881; Got it &#8212; Let's go!</button>';
+  inner.style.background = 'white';
+  inner.style.borderRadius = '28px';
+  inner.style.padding = '36px';
+  inner.style.maxWidth = '400px';
+  inner.style.width = '100%';
+  inner.style.textAlign = 'center';
+  inner.style.boxShadow = '0 20px 60px rgba(0,0,0,.3)';
+  var icon = document.createElement('div');
+  icon.innerHTML = '&#128273;';
+  icon.style.fontSize = '48px';
+  icon.style.marginBottom = '10px';
+  var title = document.createElement('h2');
+  title.textContent = 'Your Save Code';
+  title.style.fontFamily = 'Fredoka One, cursive';
+  title.style.fontSize = '26px';
+  title.style.color = '#7B2D8B';
+  title.style.marginBottom = '8px';
+  var desc = document.createElement('p');
+  desc.textContent = 'Write this down or screenshot it to restore your progress on any device!';
+  desc.style.fontSize = '14px';
+  desc.style.color = '#8C7B6B';
+  desc.style.fontWeight = '600';
+  desc.style.marginBottom = '20px';
+  desc.style.lineHeight = '1.5';
+  var box = document.createElement('div');
+  box.style.background = '#F5F0FF';
+  box.style.border = '3px solid #DDD6FE';
+  box.style.borderRadius = '20px';
+  box.style.padding = '20px';
+  box.style.marginBottom = '22px';
+  var codeEl = document.createElement('div');
+  codeEl.textContent = code;
+  codeEl.style.fontFamily = 'Fredoka One, cursive';
+  codeEl.style.fontSize = '52px';
+  codeEl.style.color = '#7B2D8B';
+  codeEl.style.letterSpacing = '8px';
+  var btn = document.createElement('button');
+  btn.innerHTML = '&#127881; Got it &mdash; Let\'s go!';
+  btn.style.width = '100%';
+  btn.style.padding = '14px';
+  btn.style.fontFamily = 'Fredoka One, cursive';
+  btn.style.fontSize = '20px';
+  btn.style.color = 'white';
+  btn.style.background = 'linear-gradient(135deg,#7B2D8B,#4A1D96)';
+  btn.style.border = 'none';
+  btn.style.borderRadius = '14px';
+  btn.style.cursor = 'pointer';
+  btn.onclick = function() { overlay.remove(); if (cb) cb(); };
+  box.appendChild(codeEl);
+  inner.appendChild(icon);
+  inner.appendChild(title);
+  inner.appendChild(desc);
+  inner.appendChild(box);
+  inner.appendChild(btn);
   overlay.appendChild(inner);
   document.body.appendChild(overlay);
-  document.getElementById('modal-btn').onclick = function() {
-    overlay.remove();
-    if (cb) cb();
-  };
 }
 
 // ── RESTORE ──────────────────────────────────────────────────
@@ -509,8 +558,8 @@ function renderHome() {
 
   var subs = [
     'Pick a chapter below and start learning about money!',
-    P.parentName + ' is cheering you on — what's next? &#127881;',
-    'You're on a roll! Keep going, money master! &#128640;'
+    P.parentName + ' is cheering you on — what\'s next? &#127881;',
+    'You\'re on a roll! Keep going, money master! &#128640;'
   ];
   document.getElementById('h-sub').innerHTML = subs[Math.min(P.visited.length, 2)];
 
