@@ -252,9 +252,15 @@ const TIPS = [
   '"It is not necessary to do extraordinary things to get extraordinary results."'
 ];
 
-let P = {childName:'',childAge:'',parentName:'',avatar:'&#129409;',xp:0,visited:[],saveCode:'',joined:null};
-let sAv = '&#129409;';
-let eAv = '&#129409;';
+let P = {childName:'',childAge:'',parentName:'',avatar:'🦁',xp:0,visited:[],saveCode:'',joined:null};
+let sAv = '🦁';
+let eAv = '🦁';
+
+// Decode initial avatar from pre-selected button
+window.addEventListener('DOMContentLoaded', function() {
+  var selBtn = document.querySelector('#av-sw .av-btn.sel');
+  if (selBtn) sAv = selBtn.innerHTML;
+});
 
 // ── SUPABASE ──────────────────────────────────────────────────
 async function sbReq(path, method, body) {
@@ -350,7 +356,7 @@ function goEdit() {
   document.getElementById('edit-code').textContent = P.saveCode || '------';
   eAv = P.avatar;
   document.querySelectorAll('#av-se .av-btn').forEach(function(b) {
-    b.classList.toggle('sel', b.dataset.av === eAv);
+    b.classList.toggle('sel', b.innerHTML === eAv);
   });
   showScreen('se');
 }
@@ -359,8 +365,8 @@ function pickAv(btn, ctx) {
   var rowId = 'av-' + ctx;
   document.querySelectorAll('#' + rowId + ' .av-btn').forEach(function(b) { b.classList.remove('sel'); });
   btn.classList.add('sel');
-  if (ctx === 'sw') sAv = btn.dataset.av;
-  else eAv = btn.dataset.av;
+  if (ctx === 'sw') sAv = btn.innerHTML;
+  else eAv = btn.innerHTML;
 }
 
 // ── SETUP ────────────────────────────────────────────────────
@@ -526,7 +532,7 @@ async function saveEdit() {
 function resetAll() {
   if (!confirm('This clears data on this device. Your save code still works to restore. Continue?')) return;
   localStorage.removeItem(LOCAL_KEY);
-  P = {childName:'',childAge:'',parentName:'',avatar:'&#129409;',xp:0,visited:[],saveCode:'',joined:null};
+  P = {childName:'',childAge:'',parentName:'',avatar:'🦁',xp:0,visited:[],saveCode:'',joined:null};
   showScreen('sw');
 }
 
@@ -549,10 +555,10 @@ async function goChapter(e, num, file, xpVal) {
 
 // ── RENDER HOME ──────────────────────────────────────────────
 function renderHome() {
-  document.getElementById('tb-av').textContent   = P.avatar;
+  document.getElementById('tb-av').innerHTML     = P.avatar;
   document.getElementById('tb-name').textContent = P.childName;
   document.getElementById('tb-age').textContent  = 'Age ' + P.childAge;
-  document.getElementById('tb-xp').textContent   = '&#11088; ' + P.xp + ' XP';
+  document.getElementById('tb-xp').innerHTML     = '&#11088; ' + P.xp + ' XP';
   document.getElementById('h-name').textContent  = P.childName;
   document.getElementById('sync-code').textContent = P.saveCode || '------';
 
