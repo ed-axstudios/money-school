@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debt Detective | Money School</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;
+  --coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;
+  --blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;
+  --red:#EF233C;--orange:#FB8500;--text:#2D2A26;--muted:#8C7B6B;
+  --card:#FFFDF8;--border:#F0E8D8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,var(--BG1),transparent 50%),radial-gradient(ellipse at 85% 80%,var(--BG2),transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:20px 20px 80px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:14px;text-decoration:none;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:7px 16px;margin-bottom:20px;transition:background .2s;}
+.back-link:hover{background:#F5F0FF;}
+/* header */
+.ch-header{text-align:center;margin-bottom:28px;}
+.ch-header .big{font-size:64px;display:block;animation:bounce 2.5s ease-in-out infinite;margin-bottom:8px;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ch-header h1{font-family:'Fredoka One',cursive;font-size:38px;color:var(--ACCENT);line-height:1.1;}
+.ch-header h1 em{color:var(--coin);font-style:normal;-webkit-text-stroke:1.5px var(--coin-dark);}
+.ch-header p{font-size:16px;color:var(--muted);margin-top:7px;font-weight:600;}
+/* story card */
+.story-card{background:white;border:2px solid var(--border);border-radius:24px;padding:0;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,.07);overflow:hidden;}
+.story-top{background:var(--STORY_BG);padding:20px 24px;display:flex;gap:16px;align-items:flex-start;}
+.story-avatar{font-size:48px;flex-shrink:0;}
+.story-bubble{background:white;border-radius:16px;padding:14px 18px;font-size:15px;line-height:1.6;font-weight:600;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.story-bubble strong{color:var(--ACCENT);}
+.story-steps{padding:20px 24px;}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;}
+.step:last-child{margin-bottom:0;}
+.step-num{font-family:'Fredoka One',cursive;font-size:18px;color:white;background:var(--ACCENT);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-text{font-size:14px;line-height:1.6;font-weight:600;color:var(--text);}
+.step-text strong{color:var(--ACCENT);}
+/* section card */
+.card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.card h2{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+/* XP banner */
+.xp-banner{background:linear-gradient(135deg,var(--ACCENT),var(--ACCENT2));border-radius:20px;padding:20px 24px;text-align:center;color:white;margin-bottom:20px;box-shadow:0 8px 28px rgba(0,0,0,.15);}
+.xp-banner h3{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px;}
+.xp-banner p{font-size:14px;opacity:.9;line-height:1.5;}
+/* buttons */
+.btn{padding:10px 20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:12px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:scale(1.04);}
+.btn:active{transform:scale(.97);}
+.btn-accent{background:var(--ACCENT);color:white;box-shadow:0 4px 14px rgba(0,0,0,.2);}
+.btn-ghost{background:white;color:var(--ACCENT);border:2px solid var(--ACCENT);}
+/* fact pills */
+.facts{display:flex;flex-direction:column;gap:10px;}
+.fact{display:flex;gap:12px;align-items:flex-start;background:white;border-radius:14px;padding:14px;border:1.5px solid var(--border);}
+.fact-icon{font-size:26px;flex-shrink:0;}
+.fact-body{font-size:14px;line-height:1.55;font-weight:600;color:var(--text);}
+.fact-body strong{color:var(--ACCENT);}
+
+:root{--ACCENT:#FB8500;--ACCENT2:#C46200;--BG1:#FFF3E0;--BG2:#E8F8F3;--STORY_BG:#FFF8F0;}
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" class="back-link">&#8592; Back to Money School</a>
+  
+<div class="ch-header">
+  <span class="big">&#128373;&#65039;</span>
+  <h1>Debt <em>Detective</em></h1>
+  <p>Not all borrowing is bad — learn when debt helps and when it hurts!</p>
+</div>
+
+<div class="story-card">
+  <div class="story-top">
+    <div class="story-avatar">&#129300;</div>
+    <div class="story-bubble">
+      I'm <strong>Dexter the Debt Detective</strong> &#128270; — and debt is my speciality!<br><br>
+      Here's the case: two friends both borrow money.<br>
+      <strong>Mia</strong> borrows &#163;200 to buy a new laptop so she can learn coding and get a job.<br>
+      <strong>Tom</strong> borrows &#163;200 on a credit card to buy sweets and video games, and forgets to pay it back.<br><br>
+      One of them is in <strong>good debt</strong>. One is in <strong>bad debt</strong>. Can you work out which is which?
+    </div>
+  </div>
+  <div class="story-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Good debt</strong> is borrowing that helps you earn MORE money or improve your life — like a mortgage to buy a house, or a student loan to get a degree that leads to a better job. The thing you bought is worth more than the debt.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Bad debt</strong> is borrowing to buy things that lose value quickly or disappear (like food, clothes, or gadgets) using expensive credit like a credit card or payday loan — and then struggling to pay it back.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Interest is the cost of borrowing.</strong> Whenever you borrow money, you pay back MORE than you borrowed. A credit card might charge 25% — so &#163;100 borrowed for a year costs &#163;125 to pay back. The longer you wait, the more it grows!</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interest calculator -->
+<div class="card">
+  <h2>&#128202; The Real Cost of Borrowing</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:18px;font-weight:600;">Adjust the sliders to see how much debt actually costs — and why paying it back quickly matters so much.</p>
+
+  <div style="margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-weight:800;font-size:15px;">&#128178; Amount borrowed</span>
+      <span style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);" id="debt-amt-val">&#163;500</span>
+    </div>
+    <input type="range" id="sl-debt" min="100" max="10000" value="500" step="100" oninput="calcDebt()" style="width:100%;accent-color:var(--ACCENT);">
+  </div>
+
+  <div style="margin-bottom:16px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-weight:800;font-size:15px;">&#128200; Interest rate (per year)</span>
+      <span style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);" id="debt-rate-val">25%</span>
+    </div>
+    <input type="range" id="sl-debt-rate" min="1" max="99" value="25" step="1" oninput="calcDebt()" style="width:100%;accent-color:var(--ACCENT);">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700;margin-top:3px;">
+      <span>1% (good mortgage)</span><span>25% (credit card)</span><span>99% (danger!)</span>
+    </div>
+  </div>
+
+  <div style="margin-bottom:18px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-weight:800;font-size:15px;">&#128197; Years to pay back</span>
+      <span style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);" id="debt-yrs-val">3 years</span>
+    </div>
+    <input type="range" id="sl-debt-yrs" min="1" max="30" value="3" step="1" oninput="calcDebt()" style="width:100%;accent-color:var(--ACCENT);">
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+    <div style="text-align:center;background:#EFF6FF;border:2px solid #BFDBFE;border-radius:14px;padding:14px;">
+      <div style="font-size:20px;">&#128178;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:#118AB2;" id="debt-orig">&#163;500</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">ORIGINALLY BORROWED</div>
+    </div>
+    <div style="text-align:center;background:#FFF0F4;border:2px solid #FBCFE8;border-radius:14px;padding:14px;">
+      <div style="font-size:20px;">&#129534;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);" id="debt-total">&#163;977</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">TOTAL PAID BACK</div>
+    </div>
+  </div>
+
+  <div id="debt-extra-box" style="text-align:center;background:#FFFBEB;border:2px solid #FDE68A;border-radius:14px;padding:14px;margin-bottom:14px;">
+    <span style="font-family:'Fredoka One',cursive;font-size:18px;" id="debt-extra-txt">You paid &#163;477 in interest — almost as much again as you borrowed!</span>
+  </div>
+
+  <div id="dexter-says" style="background:#F5F0FF;border:2px solid #DDD6FE;border-radius:16px;padding:14px 18px;display:flex;gap:12px;align-items:center;">
+    <span style="font-size:32px;">&#128270;</span>
+    <p style="font-size:14px;font-weight:700;color:var(--purple);" id="dexter-txt">Interesting case! Notice how paying back slowly makes debt much more expensive...</p>
+  </div>
+</div>
+
+<!-- Good vs bad debt sorter -->
+<div class="card">
+  <h2>&#129519; Good Debt or Bad Debt?</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:600;">Tap each type of debt to reveal whether it's typically good or bad — and why!</p>
+  <div id="debt-cards" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+</div>
+
+<div class="facts">
+  <div class="fact"><div class="fact-icon">&#127968;</div><div class="fact-body"><strong>A mortgage is usually "good debt"</strong> — you borrow to buy a house, which often goes up in value over time. After 25 years the house is yours, and worth far more than you paid.</div></div>
+  <div class="fact"><div class="fact-icon">&#128679;</div><div class="fact-body"><strong>Payday loans can charge over 1,000% interest per year</strong> — borrowing &#163;100 for a month could cost &#163;25 or more in fees. Always the most dangerous type of debt.</div></div>
+  <div class="fact"><div class="fact-icon">&#10024;</div><div class="fact-body"><strong>The best strategy?</strong> Avoid bad debt completely. For good debt, always borrow as little as possible and pay it back as fast as you can to minimise the interest you pay.</div></div>
+</div>
+
+<div class="xp-banner" style="margin-top:20px;background:linear-gradient(135deg,#FB8500,#C46200);">
+  <h3>&#11088; You earned 50 XP!</h3>
+  <p>You've completed Debt Detective — you now understand the difference between good and bad debt, how interest works, and why paying back quickly saves you money!</p>
+</div>
+
+<script>
+function calcDebt(){
+  const amt=parseInt(document.getElementById('sl-debt').value)||0;
+  const rate=parseInt(document.getElementById('sl-debt-rate').value)||0;
+  const yrs=parseInt(document.getElementById('sl-debt-yrs').value)||1;
+  document.getElementById('debt-amt-val').textContent='&#163;'+amt.toLocaleString('en-GB');
+  document.getElementById('debt-rate-val').textContent=rate+'%';
+  document.getElementById('debt-yrs-val').textContent=yrs+' year'+(yrs>1?'s':'');
+  document.getElementById('debt-orig').textContent='&#163;'+amt.toLocaleString('en-GB');
+  const total=Math.round(amt*Math.pow(1+rate/100,yrs));
+  const extra=total-amt;
+  document.getElementById('debt-total').textContent='&#163;'+total.toLocaleString('en-GB');
+  const pct=Math.round(extra/amt*100);
+  let extraTxt='';
+  if(extra===0) extraTxt='You paid no interest at all!';
+  else extraTxt='You paid &#163;'+extra.toLocaleString('en-GB')+' in interest — '+pct+'% extra on top of what you borrowed!';
+  document.getElementById('debt-extra-txt').innerHTML=extraTxt;
+  const msgs=[
+    [rate<=5 && yrs<=10,'This looks like a good mortgage rate! Low interest and a plan to pay it off — responsible borrowing.'],
+    [rate<=5,'Very low interest rate — like a mortgage or student loan. This kind of debt can be acceptable if it improves your life.'],
+    [rate<=20 && yrs<=2,'Manageable — but make sure you really need this and can afford the repayments comfortably.'],
+    [rate<=30,'This is a typical credit card rate. Notice how the total balloons if you take years to pay it off!'],
+    [rate>50,'DANGER ZONE! This is payday loan territory. Borrowing &#163;'+amt+' at '+rate+'% costs &#163;'+extra.toLocaleString('en-GB')+' extra — avoid at all costs!'],
+    [true,'Be careful — high interest debt grows fast. The best advice: only borrow what you truly need, and pay it back as fast as possible.']
+  ];
+  document.getElementById('dexter-txt').innerHTML=msgs.find(m=>m[0])[1];
+}
+calcDebt();
+
+const debtTypes=[
+  {label:'&#127979; Student Loan',good:true,why:'Investing in your education can lead to a higher salary — you only repay when earning above a threshold.'},
+  {label:'&#127968; Mortgage',good:true,why:'Borrowing to buy a home that you own and that often increases in value over time.'},
+  {label:'&#128241; New phone on credit card',good:false,why:'Phones lose value fast and credit cards charge high interest — a bad combination.'},
+  {label:'&#128663; Car loan for work',good:true,why:'If you need a car to get to a job, this can be worthwhile — though buy second-hand if you can!'},
+  {label:'&#127828; Takeaway on credit',good:false,why:'Borrowing to buy something you consume immediately — and then paying interest on it for months.'},
+  {label:'&#128084; Holiday clothes on overdraft',good:false,why:'Clothes lose nearly all their value the moment you wear them. Overdrafts charge fees too.'},
+];
+const dc=document.getElementById('debt-cards');
+debtTypes.forEach(d=>{
+  const el=document.createElement('div');
+  el.style.cssText='background:white;border:2.5px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .2s;font-size:13px;font-weight:700;text-align:center;';
+  el.innerHTML='<div style="font-size:20px;margin-bottom:6px;">'+d.label+'</div><div style="color:var(--muted);font-size:12px;">Tap to reveal</div>';
+  el.onclick=()=>{
+    el.style.background=d.good?'#E8F8F3':'#FFF0F4';
+    el.style.borderColor=d.good?'#06D6A0':'#EF476F';
+    el.innerHTML='<div style="font-size:18px;margin-bottom:4px;">'+d.label+'</div>'
+      +'<div style="font-size:13px;font-weight:800;color:'+(d.good?'#05A67D':'#EF476F')+';">'+(d.good?'&#10003; Good debt':'&#10007; Bad debt')+'</div>'
+      +'<div style="font-size:11px;color:var(--muted);margin-top:5px;font-weight:600;">'+d.why+'</div>';
+    el.onclick=null;el.style.cursor='default';
+  };
+  dc.appendChild(el);
+});
+</script>
+
+</div>
+</body>
+</html>

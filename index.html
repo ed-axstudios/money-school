@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Money School</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;--coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;--blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;--red:#EF233C;--orange:#FB8500;--teal:#0CB0A9;--text:#2D2A26;--muted:#8C7B6B;--card:#FFFDF8;--border:#F0E8D8;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,#FFF3C4,transparent 45%),radial-gradient(ellipse at 85% 75%,#D4F5EC,transparent 45%),radial-gradient(ellipse at 50% 90%,#EDE9FE,transparent 40%);pointer-events:none;z-index:0;}
+.screen{display:none;position:relative;z-index:1;min-height:100vh;}
+.screen.active{display:block;}
+#sw.active,#se.active{display:flex;flex-direction:column;align-items:center;}
+#sw{justify-content:center;padding:40px 20px 60px;}
+.hero{text-align:center;margin-bottom:32px;animation:fadeUp .6s ease both;}
+.hero .big{font-size:72px;display:block;animation:bounce 2.5s ease-in-out infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{font-family:'Fredoka One',cursive;font-size:52px;color:var(--purple);line-height:1.05;}
+.hero h1 em{color:var(--coin);font-style:normal;-webkit-text-stroke:1.5px var(--coin-dark);}
+.hero p{font-size:18px;color:var(--muted);margin-top:10px;font-weight:600;max-width:400px;margin-left:auto;margin-right:auto;}
+.pcard{background:white;border:2px solid var(--border);border-radius:28px;padding:36px 40px;width:100%;max-width:480px;box-shadow:0 12px 48px rgba(0,0,0,.09);animation:fadeUp .6s .15s ease both;}
+.pcard h2{font-family:'Fredoka One',cursive;font-size:22px;color:var(--purple);margin-bottom:22px;text-align:center;}
+.av-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
+.av-btn{font-size:34px;width:56px;height:56px;border-radius:50%;border:3px solid transparent;background:#F0E8D8;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.av-btn:hover{transform:scale(1.15);background:#FFF3C4;}
+.av-btn.sel{border-color:var(--purple);background:var(--purple-light);transform:scale(1.2);box-shadow:0 4px 16px rgba(123,45,139,.25);}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:5px;}
+.fg input{width:100%;padding:11px 15px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;border-radius:13px;border:2px solid var(--border);outline:none;background:var(--sky);color:var(--text);transition:border-color .2s,box-shadow .2s;}
+.fg input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(123,45,139,.1);}
+.fg input.cf{color:var(--pink);background:#FFF0F4;border-color:#FBCFE8;}
+.fg input.cf:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(239,71,111,.12);}
+.fg input.pf{color:var(--blue);background:#EFF6FF;border-color:#BFDBFE;}
+.fg input.pf:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(17,138,178,.12);}
+.fg input.af{color:var(--leaf-dark);background:#E8F8F3;border-color:var(--leaf);}
+.fg input.af:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(6,214,160,.12);}
+.fhint{font-size:12px;color:var(--muted);margin-top:3px;font-style:italic;}
+.pbtn{width:100%;padding:15px;font-family:'Fredoka One',cursive;font-size:22px;color:white;background:linear-gradient(135deg,var(--purple),#4A1D96);border:none;border-radius:16px;cursor:pointer;margin-top:6px;box-shadow:0 8px 28px rgba(123,45,139,.35);transition:transform .2s,box-shadow .2s;}
+.pbtn:hover{transform:scale(1.02);box-shadow:0 12px 36px rgba(123,45,139,.45);}
+.pbtn:active{transform:scale(.98);}
+.pbtn.green{background:linear-gradient(135deg,var(--leaf-dark),#038C6E);}
+.errmsg{color:var(--red);font-size:13px;font-weight:700;text-align:center;margin-top:10px;display:none;}
+.errmsg.show{display:block;}
+/* HOME */
+#sh{padding-bottom:80px;}
+.topbar{background:white;border-bottom:2px solid var(--border);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);}
+.tbl{display:flex;align-items:center;gap:12px;}
+.tb-av{font-size:30px;width:44px;height:44px;background:var(--purple-light);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #DDD6FE;}
+.tb-name{font-family:'Fredoka One',cursive;font-size:19px;color:var(--purple);}
+.tb-age{font-size:12px;color:var(--muted);font-weight:700;}
+.tbr{display:flex;align-items:center;gap:8px;}
+.xp{background:linear-gradient(135deg,var(--coin),#FF8C42);color:white;font-family:'Fredoka One',cursive;font-size:14px;padding:5px 13px;border-radius:20px;box-shadow:0 4px 12px rgba(255,183,3,.3);}
+.editbtn{background:var(--purple-light);border:2px solid #DDD6FE;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--purple);cursor:pointer;transition:background .2s;}
+.editbtn:hover{background:#EDE9FE;}
+.home-hero{padding:28px 24px 16px;text-align:center;max-width:680px;margin:0 auto;}
+.home-hero h2{font-family:'Fredoka One',cursive;font-size:32px;line-height:1.2;}
+.home-hero h2 span{color:var(--pink);}
+.home-hero p{font-size:15px;color:var(--muted);margin-top:7px;font-weight:600;}
+.pw{max-width:680px;margin:0 auto;padding:0 24px 4px;}
+.pt{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.po{height:10px;background:#E8E0D4;border-radius:10px;overflow:hidden;}
+.pi{height:100%;background:linear-gradient(90deg,var(--leaf),var(--coin));border-radius:10px;transition:width .8s cubic-bezier(.34,1.56,.64,1);}
+.sec-title{font-family:'Fredoka One',cursive;font-size:19px;color:var(--muted);padding:22px 24px 10px;max-width:680px;margin:0 auto;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:15px;padding:0 24px;max-width:680px;margin:0 auto;}
+hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16px auto 0;}
+.cc{background:white;border:2px solid var(--border);border-radius:22px;padding:20px;cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s;text-decoration:none;display:block;position:relative;overflow:hidden;}
+.cc::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:22px 22px 0 0;}
+.cc[data-c="green"]::before{background:var(--leaf);}
+.cc[data-c="coin"]::before{background:var(--coin);}
+.cc[data-c="blue"]::before{background:var(--blue);}
+.cc[data-c="red"]::before{background:var(--red);}
+.cc[data-c="orange"]::before{background:var(--orange);}
+.cc[data-c="purple"]::before{background:var(--purple);}
+.cc[data-c="teal"]::before{background:var(--teal);}
+.cc[data-c="pink"]::before{background:var(--pink);}
+.cc:not(.locked):hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.1);}
+.cc:not(.locked):hover[data-c="green"]{border-color:var(--leaf);}
+.cc:not(.locked):hover[data-c="coin"]{border-color:var(--coin);}
+.cc:not(.locked):hover[data-c="blue"]{border-color:var(--blue);}
+.cc:not(.locked):hover[data-c="red"]{border-color:var(--red);}
+.cc:not(.locked):hover[data-c="orange"]{border-color:var(--orange);}
+.cc:not(.locked):hover[data-c="purple"]{border-color:var(--purple);}
+.cc:not(.locked):hover[data-c="teal"]{border-color:var(--teal);}
+.cc:not(.locked):hover[data-c="pink"]{border-color:var(--pink);}
+.cc.locked{opacity:.52;cursor:not-allowed;filter:grayscale(.25);}
+.cc.done{border-color:var(--leaf);}
+.cc-emoji{font-size:36px;display:block;margin-bottom:9px;}
+.cc-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:3px;}
+.cc-title{font-family:'Fredoka One',cursive;font-size:19px;color:var(--text);margin-bottom:5px;line-height:1.2;}
+.cc-desc{font-size:13px;color:var(--muted);font-weight:600;line-height:1.5;margin-bottom:13px;}
+.cc-foot{display:flex;align-items:center;justify-content:space-between;}
+.cc-stat{font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px;text-transform:uppercase;letter-spacing:.4px;}
+.sr{background:#E8F8F3;color:var(--leaf-dark);}
+.sl{background:#F0E8D8;color:var(--muted);}
+.sd{background:#E8F8F3;color:var(--leaf-dark);}
+.cc-xp{font-family:'Fredoka One',cursive;font-size:13px;color:var(--coin-dark);background:#FFFBEB;padding:4px 10px;border-radius:20px;border:1.5px solid #FDE68A;}
+.buff-wrap{max-width:680px;margin:24px auto 0;padding:0 24px 24px;}
+.buff-inner{background:linear-gradient(135deg,#1a1a2e,#16213e);color:white;border-radius:18px;padding:16px 20px;display:flex;gap:14px;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.15);}
+.buff-emoji{font-size:34px;flex-shrink:0;}
+.buff-text strong{display:block;font-family:'Fredoka One',cursive;font-size:16px;color:var(--coin);margin-bottom:4px;}
+.buff-text p{font-size:13px;color:#CBD5E1;line-height:1.5;}
+.sync-note{max-width:680px;margin:12px auto 0;padding:0 24px;}
+.sync-inner{background:#F5F0FF;border:2px solid #DDD6FE;border-radius:16px;padding:13px 16px;font-size:13px;color:var(--purple);font-weight:600;display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
+.sync-inner span{font-size:20px;flex-shrink:0;margin-top:1px;}
+/* EDIT */
+#se{padding:40px 20px 60px;}
+.back-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:15px;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:8px 16px;cursor:pointer;margin-bottom:22px;transition:background .2s;}
+.back-btn:hover{background:#F5F0FF;}
+.danger-btn{width:100%;margin-top:12px;padding:12px;background:none;border:2px solid #FBCFE8;border-radius:14px;color:var(--pink);font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;}
+.danger-btn:hover{background:#FFF0F4;}
+</style>
+</head>
+<body>
+
+<!-- WELCOME -->
+<div id="sw" class="screen active">
+  <div class="hero">
+    <span class="big">&#127979;</span>
+    <h1>Money <em>School</em></h1>
+    <p>The fun way to learn everything about money &#8212; one chapter at a time!</p>
+  </div>
+  <div class="pcard">
+    <h2>&#128075; Let&#39;s set up your profile!</h2>
+    <div class="av-row" id="av-sw">
+      <button class="av-btn sel" data-av="&#129409;" onclick="pickAv(this,'sw')">&#129409;</button>
+      <button class="av-btn" data-av="&#129423;" onclick="pickAv(this,'sw')">&#129423;</button>
+      <button class="av-btn" data-av="&#129418;" onclick="pickAv(this,'sw')">&#129418;</button>
+      <button class="av-btn" data-av="&#128060;" onclick="pickAv(this,'sw')">&#128060;</button>
+      <button class="av-btn" data-av="&#129412;" onclick="pickAv(this,'sw')">&#129412;</button>
+      <button class="av-btn" data-av="&#128056;" onclick="pickAv(this,'sw')">&#128056;</button>
+      <button class="av-btn" data-av="&#128039;" onclick="pickAv(this,'sw')">&#128039;</button>
+      <button class="av-btn" data-av="&#129419;" onclick="pickAv(this,'sw')">&#129419;</button>
+      <button class="av-btn" data-av="&#128044;" onclick="pickAv(this,'sw')">&#128044;</button>
+      <button class="av-btn" data-av="&#129430;" onclick="pickAv(this,'sw')">&#129430;</button>
+    </div>
+    <div class="fg">
+      <label>Your first name</label>
+      <input type="text" id="s-cn" class="cf" placeholder="e.g. Amelie" maxlength="20" autocomplete="off">
+      <p class="fhint">Just your first name &#8212; nothing identifying needed!</p>
+    </div>
+    <div class="fg">
+      <label>Your age</label>
+      <input type="number" id="s-ca" class="af" placeholder="e.g. 8" min="4" max="18">
+    </div>
+    <div class="fg">
+      <label>Parent or guardian&#39;s name</label>
+      <input type="text" id="s-pn" class="pf" placeholder="e.g. Daddy" maxlength="20" autocomplete="off">
+      <p class="fhint">So we know who&#39;s helping you learn!</p>
+    </div>
+    <button class="pbtn" onclick="saveSetup()">&#128640; Start Money School!</button>
+    <p class="errmsg" id="sw-err">Please enter your name and age to continue!</p>
+  </div>
+</div>
+
+<!-- HOME -->
+<div id="sh" class="screen">
+  <div class="topbar">
+    <div class="tbl">
+      <div class="tb-av" id="tb-av">&#129409;</div>
+      <div>
+        <div class="tb-name" id="tb-name">Amelie</div>
+        <div class="tb-age" id="tb-age">Age 8</div>
+      </div>
+    </div>
+    <div class="tbr">
+      <div class="xp" id="tb-xp">&#11088; 0 XP</div>
+      <button class="editbtn" onclick="goEdit()">&#9999;&#65039; Edit</button>
+    </div>
+  </div>
+
+  <div class="home-hero">
+    <h2>Hi, <span id="h-name">Amelie</span>! &#128075;</h2>
+    <p id="h-sub">Pick a chapter below and start learning about money!</p>
+  </div>
+
+  <div class="pw">
+    <div class="pt"><span>Your progress</span><span id="prog-txt">0 of 8 chapters visited</span></div>
+    <div class="po"><div class="pi" id="prog-bar" style="width:0%"></div></div>
+  </div>
+
+  <hr class="dv" style="margin-top:18px;">
+
+  <div class="sync-note">
+    <div class="sync-inner">
+      <span>&#128161;</span>
+      <div>Your progress is saved on <strong>this device</strong> automatically. To use on another device, you can transfer your save data &#8212; we&#39;ll add this feature soon!</div>
+    </div>
+  </div>
+
+  <p class="sec-title">&#128218; Your Money School Chapters</p>
+
+  <div class="grid">
+
+    <a class="cc" data-c="green" id="ch1" href="#" onclick="goChapter(event,1,'money-tree.html',50)">
+      <span class="cc-emoji">&#127795;</span>
+      <div class="cc-num">Chapter 1</div>
+      <div class="cc-title">The Money Tree</div>
+      <div class="cc-desc">Plant tiny seeds of money and watch them grow into a fortune! Learn the magic of compound interest.</div>
+      <div class="cc-foot">
+        <span class="cc-stat sr" id="ch1-stat">&#9654; Play now</span>
+        <span class="cc-xp">+50 XP</span>
+      </div>
+    </a>
+
+    <a class="cc" data-c="coin" id="ch2" href="#" onclick="goChapter(event,2,'budget-boss.html',50)">
+      <span class="cc-emoji">&#128202;</span>
+      <div class="cc-num">Chapter 2</div>
+      <div class="cc-title">Budget Boss</div>
+      <div class="cc-desc">Learn to be the boss of your money &#8212; needs vs wants, spending plans, and making every penny count.</div>
+      <div class="cc-foot"><span class="cc-stat sr" id="ch2-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
+    </a>
+
+    <a class="cc" data-c="blue" id="ch3" href="#" onclick="goChapter(event,3,'tax-explorer.html',50)">
+      <span class="cc-emoji">&#129534;</span>
+      <div class="cc-num">Chapter 3</div>
+      <div class="cc-title">Tax Explorer</div>
+      <div class="cc-desc">Where does the government&#39;s money come from? Discover how taxes work and why everyone pays them.</div>
+      <div class="cc-foot"><span class="cc-stat sr" id="ch3-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
+    </a>
+
+    <a class="cc" data-c="red" id="ch4" href="#" onclick="goChapter(event,4,'scam-buster.html',50)">
+      <span class="cc-emoji">&#128737;&#65039;</span>
+      <div class="cc-num">Chapter 4</div>
+      <div class="cc-title">Scam Buster</div>
+      <div class="cc-desc">Spot the tricks! Learn how to protect yourself from scams, fake deals, and online fraudsters.</div>
+      <div class="cc-foot"><span class="cc-stat sr" id="ch4-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
+    </a>
+
+    <a class="cc" data-c="orange" id="ch5" href="#" onclick="goChapter(event,5,'debt-detective.html',50)">
+      <span class="cc-emoji">&#128179;</span>
+      <div class="cc-num">Chapter 5</div>
+      <div class="cc-title">Debt Detective</div>
+      <div class="cc-desc">Not all borrowing is bad! Find out the difference between helpful debt and dangerous debt.</div>
+      <div class="cc-foot"><span class="cc-stat sr" id="ch5-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
+    </a>
+
+    <div class="cc locked" data-c="purple">
+      <span class="cc-emoji">&#128200;</span>
+      <div class="cc-num">Chapter 6</div>
+      <div class="cc-title">Stock Market Adventure</div>
+      <div class="cc-desc">What is a share? How do companies grow? Become a junior investor and explore the stock market.</div>
+      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div>
+    </div>
+
+    <div class="cc locked" data-c="teal">
+      <span class="cc-emoji">&#127969;</span>
+      <div class="cc-num">Chapter 7</div>
+      <div class="cc-title">Home Buyer</div>
+      <div class="cc-desc">How do people buy a house? Learn about mortgages, deposits, and the path to owning your own home.</div>
+      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div>
+    </div>
+
+    <div class="cc locked" data-c="pink">
+      <span class="cc-emoji">&#127749;&#65039;</span>
+      <div class="cc-num">Chapter 8</div>
+      <div class="cc-title">Future You</div>
+      <div class="cc-desc">Plan for the day you stop working! Discover pensions, retirement savings, and why starting early is everything.</div>
+      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+100 XP</span></div>
+    </div>
+
+  </div>
+
+  <div class="buff-wrap">
+    <div class="buff-inner">
+      <span class="buff-emoji">&#127913;</span>
+      <div class="buff-text">
+        <strong>Warren Buffett&#39;s Tip of the Day</strong>
+        <p id="buff-tip">"Someone is sitting in the shade today because someone planted a tree a long time ago."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT -->
+<div id="se" class="screen">
+  <button class="back-btn" onclick="goHome()">&#8592; Back to Money School</button>
+  <div class="pcard">
+    <h2>&#9999;&#65039; Edit your profile</h2>
+    <div class="av-row" id="av-se">
+      <button class="av-btn" data-av="&#129409;" onclick="pickAv(this,'se')">&#129409;</button>
+      <button class="av-btn" data-av="&#129423;" onclick="pickAv(this,'se')">&#129423;</button>
+      <button class="av-btn" data-av="&#129418;" onclick="pickAv(this,'se')">&#129418;</button>
+      <button class="av-btn" data-av="&#128060;" onclick="pickAv(this,'se')">&#128060;</button>
+      <button class="av-btn" data-av="&#129412;" onclick="pickAv(this,'se')">&#129412;</button>
+      <button class="av-btn" data-av="&#128056;" onclick="pickAv(this,'se')">&#128056;</button>
+      <button class="av-btn" data-av="&#128039;" onclick="pickAv(this,'se')">&#128039;</button>
+      <button class="av-btn" data-av="&#129419;" onclick="pickAv(this,'se')">&#129419;</button>
+      <button class="av-btn" data-av="&#128044;" onclick="pickAv(this,'se')">&#128044;</button>
+      <button class="av-btn" data-av="&#129430;" onclick="pickAv(this,'se')">&#129430;</button>
+    </div>
+    <div class="fg"><label>Your first name</label><input type="text" id="e-cn" class="cf" maxlength="20" autocomplete="off"></div>
+    <div class="fg"><label>Your age</label><input type="number" id="e-ca" class="af" min="4" max="18"></div>
+    <div class="fg"><label>Parent or guardian&#39;s name</label><input type="text" id="e-pn" class="pf" maxlength="20" autocomplete="off"></div>
+    <button class="pbtn green" onclick="saveEdit()">&#128190; Save changes</button>
+    <button class="danger-btn" onclick="resetAll()">&#128465;&#65039; Start fresh (clears all saved data)</button>
+  </div>
+</div>
+
+<script>
+const KEY='moneyschool_v1';
+const TIPS=[
+  '"Someone is sitting in the shade today because someone planted a tree a long time ago."',
+  '"Do not save what is left after spending; spend what is left after saving."',
+  '"The earlier you start investing, the more time your money has to grow."',
+  '"Price is what you pay. Value is what you get."',
+  '"Rule No.1: Never lose money. Rule No.2: Never forget Rule No.1."',
+  '"The best investment you can make is in yourself."',
+  '"It is not necessary to do extraordinary things to get extraordinary results."'
+];
+let P={childName:'',childAge:'',parentName:'',avatar:'\u{1F981}',xp:0,visited:[],joined:null};
+let sAv='\u{1F981}',eAv='\u{1F981}';
+
+function init(){
+  try{
+    const s=localStorage.getItem(KEY);
+    if(s){P={...P,...JSON.parse(s)};goHome();}
+    else show('sw');
+  }catch(e){show('sw');}
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function goHome(){show('sh');renderHome();}
+function goEdit(){
+  show('se');
+  document.getElementById('e-cn').value=P.childName;
+  document.getElementById('e-ca').value=P.childAge;
+  document.getElementById('e-pn').value=P.parentName;
+  eAv=P.avatar;
+  document.querySelectorAll('#av-se .av-btn').forEach(b=>b.classList.toggle('sel',b.dataset.av===eAv));
+}
+
+function pickAv(btn,ctx){
+  const rid='av-'+ctx;
+  document.querySelectorAll('#'+rid+' .av-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  if(ctx==='sw')sAv=btn.dataset.av; else eAv=btn.dataset.av;
+}
+
+function saveSetup(){
+  const name=document.getElementById('s-cn').value.trim();
+  const age=document.getElementById('s-ca').value.trim();
+  const par=document.getElementById('s-pn').value.trim();
+  if(!name||!age){document.getElementById('sw-err').classList.add('show');return;}
+  document.getElementById('sw-err').classList.remove('show');
+  P={childName:name,childAge:age,parentName:par||'Parent',avatar:sAv,xp:0,visited:[],joined:new Date().toISOString()};
+  persist();goHome();
+}
+
+function saveEdit(){
+  const name=document.getElementById('e-cn').value.trim();
+  const age=document.getElementById('e-ca').value.trim();
+  const par=document.getElementById('e-pn').value.trim();
+  if(!name||!age)return;
+  P.childName=name;P.childAge=age;P.parentName=par||'Parent';P.avatar=eAv;
+  persist();goHome();
+}
+
+function resetAll(){
+  if(!confirm('This will clear everything and start fresh. Are you sure?'))return;
+  localStorage.removeItem(KEY);
+  P={childName:'',childAge:'',parentName:'',avatar:'\u{1F981}',xp:0,visited:[],joined:null};
+  show('sw');
+}
+
+function persist(){localStorage.setItem(KEY,JSON.stringify(P));}
+
+function goChapter(e,num,file,xpVal){
+  e.preventDefault();
+  if(!P.visited.includes(num)){P.visited.push(num);P.xp+=xpVal;persist();}
+  const q=new URLSearchParams({childName:P.childName,age:P.childAge,parentName:P.parentName,start:'50',rate:'5',years:'30'});
+  window.location.href=file+'?'+q.toString();
+}
+
+function renderHome(){
+  const {childName,childAge,parentName,avatar,xp,visited}=P;
+  document.getElementById('tb-av').textContent=avatar;
+  document.getElementById('tb-name').textContent=childName;
+  document.getElementById('tb-age').textContent='Age '+childAge;
+  document.getElementById('tb-xp').textContent='\u2B50 '+xp+' XP';
+  document.getElementById('h-name').textContent=childName;
+  const subs=['Pick a chapter below and start learning about money!',
+    parentName+' is cheering you on \u2014 what\'s next? \uD83C\uDF89',
+    'You\'re on a roll! Keep going, money master! \uD83D\uDE80'];
+  document.getElementById('h-sub').textContent=visited.length===0?subs[0]:visited.length===1?subs[1]:subs[2];
+  const done=visited.length,total=8;
+  document.getElementById('prog-txt').textContent=done+' of '+total+' chapters visited';
+  document.getElementById('prog-bar').style.width=Math.round(done/total*100)+'%';
+  [1,2,3,4,5].forEach(n=>{
+    if(visited.includes(n)){
+      const s=document.getElementById('ch'+n+'-stat');
+      if(s){s.textContent='\u2713 Visited';s.className='cc-stat sd';}
+      const c=document.getElementById('ch'+n);
+      if(c)c.classList.add('done');
+    }
+  });
+  document.getElementById('buff-tip').textContent=TIPS[new Date().getDate()%TIPS.length];
+}
+
+init();
+</script>
+</body>
+</html>

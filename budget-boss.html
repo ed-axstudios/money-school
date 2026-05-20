@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Boss | Money School</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;
+  --coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;
+  --blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;
+  --red:#EF233C;--orange:#FB8500;--text:#2D2A26;--muted:#8C7B6B;
+  --card:#FFFDF8;--border:#F0E8D8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,var(--BG1),transparent 50%),radial-gradient(ellipse at 85% 80%,var(--BG2),transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:20px 20px 80px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:14px;text-decoration:none;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:7px 16px;margin-bottom:20px;transition:background .2s;}
+.back-link:hover{background:#F5F0FF;}
+/* header */
+.ch-header{text-align:center;margin-bottom:28px;}
+.ch-header .big{font-size:64px;display:block;animation:bounce 2.5s ease-in-out infinite;margin-bottom:8px;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ch-header h1{font-family:'Fredoka One',cursive;font-size:38px;color:var(--ACCENT);line-height:1.1;}
+.ch-header h1 em{color:var(--coin);font-style:normal;-webkit-text-stroke:1.5px var(--coin-dark);}
+.ch-header p{font-size:16px;color:var(--muted);margin-top:7px;font-weight:600;}
+/* story card */
+.story-card{background:white;border:2px solid var(--border);border-radius:24px;padding:0;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,.07);overflow:hidden;}
+.story-top{background:var(--STORY_BG);padding:20px 24px;display:flex;gap:16px;align-items:flex-start;}
+.story-avatar{font-size:48px;flex-shrink:0;}
+.story-bubble{background:white;border-radius:16px;padding:14px 18px;font-size:15px;line-height:1.6;font-weight:600;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.story-bubble strong{color:var(--ACCENT);}
+.story-steps{padding:20px 24px;}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;}
+.step:last-child{margin-bottom:0;}
+.step-num{font-family:'Fredoka One',cursive;font-size:18px;color:white;background:var(--ACCENT);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-text{font-size:14px;line-height:1.6;font-weight:600;color:var(--text);}
+.step-text strong{color:var(--ACCENT);}
+/* section card */
+.card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.card h2{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+/* XP banner */
+.xp-banner{background:linear-gradient(135deg,var(--ACCENT),var(--ACCENT2));border-radius:20px;padding:20px 24px;text-align:center;color:white;margin-bottom:20px;box-shadow:0 8px 28px rgba(0,0,0,.15);}
+.xp-banner h3{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px;}
+.xp-banner p{font-size:14px;opacity:.9;line-height:1.5;}
+/* buttons */
+.btn{padding:10px 20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:12px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:scale(1.04);}
+.btn:active{transform:scale(.97);}
+.btn-accent{background:var(--ACCENT);color:white;box-shadow:0 4px 14px rgba(0,0,0,.2);}
+.btn-ghost{background:white;color:var(--ACCENT);border:2px solid var(--ACCENT);}
+/* fact pills */
+.facts{display:flex;flex-direction:column;gap:10px;}
+.fact{display:flex;gap:12px;align-items:flex-start;background:white;border-radius:14px;padding:14px;border:1.5px solid var(--border);}
+.fact-icon{font-size:26px;flex-shrink:0;}
+.fact-body{font-size:14px;line-height:1.55;font-weight:600;color:var(--text);}
+.fact-body strong{color:var(--ACCENT);}
+
+:root{--ACCENT:#EF476F;--ACCENT2:#D03060;--BG1:#FFEEF2;--BG2:#E8F8F3;--STORY_BG:#FFF0F4;}
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" class="back-link">&#8592; Back to Money School</a>
+  
+<div class="ch-header">
+  <span class="big">&#128202;</span>
+  <h1>Budget <em>Boss</em></h1>
+  <p>Learn to be the boss of your money — every single penny!</p>
+</div>
+
+<!-- Story -->
+<div class="story-card">
+  <div class="story-top">
+    <div class="story-avatar">&#129399;</div>
+    <div class="story-bubble">
+      Hi! I'm <strong>Penny the Piggy</strong> &#128024; — your Budget Boss guide!<br><br>
+      Imagine it's your birthday and you've just been given <strong>&#163;20</strong> &#127873;. 
+      Amazing! But now comes the really important question...<br><br>
+      <em>What do you do with it?</em> Just spend it all right away? Save it? Give some away? 
+      Let me show you a secret trick that smart people use called the <strong>Spend, Save, Give</strong> rule!
+    </div>
+  </div>
+  <div class="story-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Needs vs Wants:</strong> First, ask yourself — do I <em>need</em> this, or do I just <em>want</em> it? Food, school supplies and warm clothes are needs. A new toy or sweets are wants. Needs come first!</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>The 3 Pots rule:</strong> Split your money into three pots — one to <strong>Spend</strong> on things you enjoy, one to <strong>Save</strong> for something bigger, and one to <strong>Give</strong> to someone who needs it more.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Make a plan before you spend:</strong> Deciding ahead of time how to use your money means you won't run out and feel sad later. That plan is called a <strong>budget</strong> — and you're about to make one!</div>
+    </div>
+  </div>
+</div>
+
+<!-- Interactive budget splitter -->
+<div class="card">
+  <h2>&#127381; Split Your &#163;20 Birthday Money!</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:18px;font-weight:600;">Drag the sliders to choose how much goes in each pot. Penny will react to your choices!</p>
+
+  <div id="budget-pots">
+    <div class="pot-row" style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-weight:800;font-size:15px;">&#128084; Spend <span style="font-size:12px;color:var(--muted);font-weight:600;">(enjoy now)</span></span>
+        <span class="pot-val" id="spend-val" style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);">&#163;10</span>
+      </div>
+      <input type="range" id="sl-spend" min="0" max="20" value="10" step="1" oninput="updateBudget()" style="width:100%;accent-color:var(--ACCENT);">
+    </div>
+    <div class="pot-row" style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-weight:800;font-size:15px;">&#128180; Save <span style="font-size:12px;color:var(--muted);font-weight:600;">(for later)</span></span>
+        <span class="pot-val" id="save-val" style="font-family:'Fredoka One',cursive;font-size:20px;color:#118AB2;">&#163;7</span>
+      </div>
+      <input type="range" id="sl-save" min="0" max="20" value="7" step="1" oninput="updateBudget()" style="width:100%;accent-color:#118AB2;">
+    </div>
+    <div class="pot-row" style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-weight:800;font-size:15px;">&#10084;&#65039; Give <span style="font-size:12px;color:var(--muted);font-weight:600;">(help others)</span></span>
+        <span class="pot-val" id="give-val" style="font-family:'Fredoka One',cursive;font-size:20px;color:#06D6A0;">&#163;3</span>
+      </div>
+      <input type="range" id="sl-give" min="0" max="20" value="3" step="1" oninput="updateBudget()" style="width:100%;accent-color:#06D6A0;">
+    </div>
+  </div>
+
+  <!-- Remaining indicator -->
+  <div id="remaining-box" style="background:#FFFBEB;border:2px solid #FDE68A;border-radius:14px;padding:14px 18px;text-align:center;margin-bottom:16px;">
+    <span style="font-family:'Fredoka One',cursive;font-size:22px;" id="remaining-txt">&#163;0 left to allocate &#127881;</span>
+  </div>
+
+  <!-- Visual pots -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+    <div style="text-align:center;background:#FFF0F4;border:2px solid #FBCFE8;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:28px;">&#128084;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:var(--ACCENT);" id="vis-spend">&#163;10</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">SPEND</div>
+    </div>
+    <div style="text-align:center;background:#EFF6FF;border:2px solid #BFDBFE;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:28px;">&#128180;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:#118AB2;" id="vis-save">&#163;7</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">SAVE</div>
+    </div>
+    <div style="text-align:center;background:#E8F8F3;border:2px solid #BBF7D0;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:28px;">&#10084;&#65039;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:20px;color:#06D6A0;" id="vis-give">&#163;3</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">GIVE</div>
+    </div>
+  </div>
+
+  <!-- Penny reaction -->
+  <div id="penny-reaction" style="background:#F5F0FF;border:2px solid #DDD6FE;border-radius:16px;padding:14px 18px;display:flex;gap:12px;align-items:center;">
+    <span style="font-size:32px;">&#128024;</span>
+    <p style="font-size:14px;font-weight:700;color:var(--purple);" id="penny-says">Oink! That looks like a great budget! You're already thinking like a money boss!</p>
+  </div>
+</div>
+
+<!-- Needs vs Wants game -->
+<div class="card">
+  <h2>&#129335; Needs or Wants?</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:16px;font-weight:600;">Tap each item to decide — is it something you <strong>need</strong> or something you <strong>want</strong>?</p>
+  <div id="nw-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"></div>
+  <div id="nw-result" style="margin-top:14px;text-align:center;font-family:'Fredoka One',cursive;font-size:18px;display:none;"></div>
+</div>
+
+<!-- Facts -->
+<div class="card">
+  <h2>&#129504; Money Boss Facts!</h2>
+  <div class="facts">
+    <div class="fact"><div class="fact-icon">&#128200;</div><div class="fact-body"><strong>People who write down a budget save 20% more money</strong> than those who don't. Making a plan really works!</div></div>
+    <div class="fact"><div class="fact-icon">&#127381;</div><div class="fact-body">Warren Buffett still <strong>lives in the same house he bought in 1958</strong> for $31,500 — even though he's one of the richest people alive. He knows the difference between needs and wants!</div></div>
+    <div class="fact"><div class="fact-icon">&#10024;</div><div class="fact-body">The <strong>50/30/20 rule</strong> used by millions of adults says: spend 50% on needs, 30% on wants, and save 20%. Your Spend/Save/Give pots are exactly the same idea!</div></div>
+  </div>
+</div>
+
+<div class="xp-banner">
+  <h3>&#11088; You earned 50 XP!</h3>
+  <p>You've completed Budget Boss — you now know about needs vs wants, the three pots rule, and how to plan a budget!</p>
+</div>
+
+<script>
+const nwItems=[
+  {label:'&#127842; Dinner',need:true},{label:'&#127381; New toy',need:false},
+  {label:'&#128218; School book',need:true},{label:'&#127381; Sweets',need:false},
+  {label:'&#128084; Winter coat',need:true},{label:'&#127911; Video game',need:false},
+  {label:'&#128697; Bus fare',need:true},{label:'&#127878; Decoration',need:false},
+];
+let nwAnswers={};
+function buildNW(){
+  const g=document.getElementById('nw-grid');
+  nwItems.forEach((item,i)=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:white;border:2.5px solid var(--border);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;font-size:13px;font-weight:700;';
+    d.innerHTML='<div style="font-size:26px;margin-bottom:6px;">'+item.label+'</div><div style="color:var(--muted);">Tap to decide</div>';
+    d.onclick=()=>answerNW(d,item,i);
+    g.appendChild(d);
+  });
+}
+function answerNW(el,item,i){
+  if(nwAnswers[i]!==undefined)return;
+  const isCorrect=item.need;
+  // toggle between need/want on each tap — simplified: first tap = Need guess
+  if(!el.dataset.guessed){
+    el.dataset.guessed='need';
+    el.style.background=isCorrect?'#E8F8F3':'#FFF0F4';
+    el.style.borderColor=isCorrect?'#06D6A0':'#EF476F';
+    el.innerHTML='<div style="font-size:26px;margin-bottom:4px;">'+item.label+'</div>'
+      +'<div style="font-size:12px;font-weight:800;color:'+(isCorrect?'#05A67D':'#EF476F')+';">'
+      +(isCorrect?'&#10003; NEED':'&#10007; That\'s a WANT!')+'</div>';
+    nwAnswers[i]=true;
+    checkNWDone();
+  }
+}
+function checkNWDone(){
+  if(Object.keys(nwAnswers).length===nwItems.length){
+    const r=document.getElementById('nw-result');
+    r.style.display='block';
+    r.innerHTML='&#127881; Great job spotting needs and wants!';
+    r.style.color='var(--ACCENT)';
+  }
+}
+buildNW();
+
+// Budget splitter
+function updateBudget(){
+  const spend=parseInt(document.getElementById('sl-spend').value);
+  const save=parseInt(document.getElementById('sl-save').value);
+  const give=parseInt(document.getElementById('sl-give').value);
+  const total=20;
+  const used=spend+save+give;
+  const left=total-used;
+  document.getElementById('spend-val').textContent='&#163;'+spend;
+  document.getElementById('save-val').textContent='&#163;'+save;
+  document.getElementById('give-val').textContent='&#163;'+give;
+  document.getElementById('vis-spend').textContent='&#163;'+spend;
+  document.getElementById('vis-save').textContent='&#163;'+save;
+  document.getElementById('vis-give').textContent='&#163;'+give;
+  const rb=document.getElementById('remaining-box');
+  const rt=document.getElementById('remaining-txt');
+  if(left>0){
+    rb.style.background='#FFFBEB';rb.style.borderColor='#FDE68A';
+    rt.textContent='&#163;'+left+' still to allocate — keep going!';
+  } else if(left===0){
+    rb.style.background='#E8F8F3';rb.style.borderColor='#06D6A0';
+    rt.textContent='&#163;0 left — perfectly planned! &#127881;';
+  } else {
+    rb.style.background='#FFF0F4';rb.style.borderColor='#FBCFE8';
+    rt.textContent='Oops — &#163;'+Math.abs(left)+' over budget! Adjust the sliders.';
+  }
+  // Penny reaction
+  const msgs=[
+    [give>=5 && save>=5,'&#128024; Oink oink! Wow — you\'re being SO generous AND saving loads. That\'s incredible! &#127881;'],
+    [save>=10,'&#128024; Amazing saver! Putting away &#163;'+save+' means you\'ll have something really exciting to look forward to!'],
+    [give>=5,'&#128024; You\'re giving &#163;'+give+'? That\'s so kind! Helping others feels even better than spending!'],
+    [spend>=15,'&#128024; Hmm... spending most of it is fun, but remember — saving even a little bit adds up over time!'],
+    [left===0,'&#128024; A perfect budget! Every pound has a job. You\'re a real money boss!'],
+    [true,'&#128024; Oink! Looking good so far — keep adjusting until every pound has a home!']
+  ];
+  const msg=msgs.find(m=>m[0]);
+  document.getElementById('penny-says').innerHTML=msg[1];
+}
+updateBudget();
+</script>
+
+</div>
+</body>
+</html>

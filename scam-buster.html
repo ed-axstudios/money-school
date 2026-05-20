@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scam Buster | Money School</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;
+  --coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;
+  --blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;
+  --red:#EF233C;--orange:#FB8500;--text:#2D2A26;--muted:#8C7B6B;
+  --card:#FFFDF8;--border:#F0E8D8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,var(--BG1),transparent 50%),radial-gradient(ellipse at 85% 80%,var(--BG2),transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:20px 20px 80px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:14px;text-decoration:none;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:7px 16px;margin-bottom:20px;transition:background .2s;}
+.back-link:hover{background:#F5F0FF;}
+/* header */
+.ch-header{text-align:center;margin-bottom:28px;}
+.ch-header .big{font-size:64px;display:block;animation:bounce 2.5s ease-in-out infinite;margin-bottom:8px;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ch-header h1{font-family:'Fredoka One',cursive;font-size:38px;color:var(--ACCENT);line-height:1.1;}
+.ch-header h1 em{color:var(--coin);font-style:normal;-webkit-text-stroke:1.5px var(--coin-dark);}
+.ch-header p{font-size:16px;color:var(--muted);margin-top:7px;font-weight:600;}
+/* story card */
+.story-card{background:white;border:2px solid var(--border);border-radius:24px;padding:0;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,.07);overflow:hidden;}
+.story-top{background:var(--STORY_BG);padding:20px 24px;display:flex;gap:16px;align-items:flex-start;}
+.story-avatar{font-size:48px;flex-shrink:0;}
+.story-bubble{background:white;border-radius:16px;padding:14px 18px;font-size:15px;line-height:1.6;font-weight:600;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.story-bubble strong{color:var(--ACCENT);}
+.story-steps{padding:20px 24px;}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;}
+.step:last-child{margin-bottom:0;}
+.step-num{font-family:'Fredoka One',cursive;font-size:18px;color:white;background:var(--ACCENT);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-text{font-size:14px;line-height:1.6;font-weight:600;color:var(--text);}
+.step-text strong{color:var(--ACCENT);}
+/* section card */
+.card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.card h2{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+/* XP banner */
+.xp-banner{background:linear-gradient(135deg,var(--ACCENT),var(--ACCENT2));border-radius:20px;padding:20px 24px;text-align:center;color:white;margin-bottom:20px;box-shadow:0 8px 28px rgba(0,0,0,.15);}
+.xp-banner h3{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px;}
+.xp-banner p{font-size:14px;opacity:.9;line-height:1.5;}
+/* buttons */
+.btn{padding:10px 20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:12px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:scale(1.04);}
+.btn:active{transform:scale(.97);}
+.btn-accent{background:var(--ACCENT);color:white;box-shadow:0 4px 14px rgba(0,0,0,.2);}
+.btn-ghost{background:white;color:var(--ACCENT);border:2px solid var(--ACCENT);}
+/* fact pills */
+.facts{display:flex;flex-direction:column;gap:10px;}
+.fact{display:flex;gap:12px;align-items:flex-start;background:white;border-radius:14px;padding:14px;border:1.5px solid var(--border);}
+.fact-icon{font-size:26px;flex-shrink:0;}
+.fact-body{font-size:14px;line-height:1.55;font-weight:600;color:var(--text);}
+.fact-body strong{color:var(--ACCENT);}
+
+:root{--ACCENT:#EF233C;--ACCENT2:#B5002B;--BG1:#FFEBEE;--BG2:#EDE9FE;--STORY_BG:#FFF0F4;}
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" class="back-link">&#8592; Back to Money School</a>
+  
+<div class="ch-header">
+  <span class="big">&#128737;&#65039;</span>
+  <h1>Scam <em>Buster</em></h1>
+  <p>Learn to spot the tricks and keep your money safe!</p>
+</div>
+
+<div class="story-card">
+  <div class="story-top">
+    <div class="story-avatar">&#129399;</div>
+    <div class="story-bubble">
+      Hey! I'm <strong>Detective Dana</strong> &#128373;&#65039; — and today we're going on a mission to catch scammers!<br><br>
+      Imagine you're playing your favourite game online and you get a message:<br><br>
+      <em>"Congratulations! You've won 10,000 free gems! Click here and enter your parent's card number to claim your prize!"</em><br><br>
+      Does something feel <strong>wrong</strong> about that? Your instincts are right — that's a <strong>scam</strong>! Let me teach you exactly how to spot them.
+    </div>
+  </div>
+  <div class="story-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>If it sounds too good to be true, it probably is.</strong> Free money, free prizes, free gems — scammers use exciting offers to trick you. Real companies don't give things away for nothing.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>Never share personal or payment details.</strong> No real company will ever ask for your password, bank card number, or home address in a message or pop-up. If they do — it's a scam.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Urgent = danger.</strong> Scammers say things like "Act NOW!" or "Only 2 minutes left!" to panic you into doing something without thinking. Always pause. Always check with a trusted adult first.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Real or Fake game -->
+<div class="card">
+  <h2>&#128270; Real or Fake? You Decide!</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:18px;font-weight:600;">Read each message below and decide — is it REAL or a SCAM? Detective Dana is watching!</p>
+  <div id="scam-game"></div>
+  <div id="scam-score" style="text-align:center;font-family:'Fredoka One',cursive;font-size:22px;margin-top:14px;display:none;"></div>
+</div>
+
+<!-- Red flag spotter -->
+<div class="card">
+  <h2>&#128681; The 6 Red Flags of a Scam</h2>
+  <div class="facts">
+    <div class="fact"><div class="fact-icon">&#127873;</div><div class="fact-body"><strong>"You've won a prize!"</strong> Did you enter a competition? No? Then it's not real. Scammers say you've won something to get you excited and off-guard.</div></div>
+    <div class="fact"><div class="fact-icon">&#128274;</div><div class="fact-body"><strong>Asking for passwords or card numbers.</strong> No legitimate company ever needs your password. Ever. If they ask — close it immediately and tell an adult.</div></div>
+    <div class="fact"><div class="fact-icon">&#9203;</div><div class="fact-body"><strong>"Act NOW before it's too late!"</strong> Real offers don't disappear in 2 minutes. Urgency is a trick to stop you thinking clearly.</div></div>
+    <div class="fact"><div class="fact-icon">&#128140;</div><div class="fact-body"><strong>Spelling mistakes and weird email addresses.</strong> Real companies check their spelling. A message from "Amaz0n-supp0rt@gmail.com" is NOT from Amazon.</div></div>
+    <div class="fact"><div class="fact-icon">&#128241;</div><div class="fact-body"><strong>Unsolicited messages.</strong> Did you ask to be contacted? No? Then be suspicious. Scammers contact you out of nowhere on text, email, or social media.</div></div>
+    <div class="fact"><div class="fact-icon">&#128373;&#65039;</div><div class="fact-body"><strong>It feels wrong.</strong> Trust your gut! If something makes you uncomfortable or confused, stop and tell a trusted adult. Always.</div></div>
+  </div>
+</div>
+
+<!-- What to do -->
+<div class="card" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border:none;color:white;">
+  <h2 style="color:#FFB703;">&#128737;&#65039; If You Think It's a Scam...</h2>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="display:flex;gap:12px;align-items:center;"><div style="font-family:'Fredoka One',cursive;font-size:22px;color:#FFB703;width:32px;flex-shrink:0;">1</div><div style="font-size:14px;color:#CBD5E1;font-weight:600;"><strong style="color:white;">STOP</strong> — don't click anything, don't reply, don't share anything.</div></div>
+    <div style="display:flex;gap:12px;align-items:center;"><div style="font-family:'Fredoka One',cursive;font-size:22px;color:#FFB703;width:32px;flex-shrink:0;">2</div><div style="font-size:14px;color:#CBD5E1;font-weight:600;"><strong style="color:white;">TELL</strong> — tell a parent, guardian or trusted adult straight away.</div></div>
+    <div style="display:flex;gap:12px;align-items:center;"><div style="font-family:'Fredoka One',cursive;font-size:22px;color:#FFB703;width:32px;flex-shrink:0;">3</div><div style="font-size:14px;color:#CBD5E1;font-weight:600;"><strong style="color:white;">REPORT</strong> — adults can report scams to Action Fraud (actionfraud.police.uk) in the UK.</div></div>
+  </div>
+</div>
+
+<div class="xp-banner" style="margin-top:20px;background:linear-gradient(135deg,#EF233C,#B5002B);">
+  <h3>&#11088; You earned 50 XP!</h3>
+  <p>You've completed Scam Buster — you can now spot red flags, understand why scammers use urgency, and know exactly what to do if something feels wrong!</p>
+</div>
+
+<script>
+const scams=[
+  {msg:'&#127873; "CONGRATULATIONS! You\'ve been selected to win a FREE iPhone 15! Click here NOW to claim before it expires in 5 minutes!"',isScam:true,explain:'Classic scam! You didn\'t enter anything, there\'s fake urgency, and real companies don\'t give free phones like this.'},
+  {msg:'&#128231; "Hi, this is your school. Reminder: sports day is this Friday. No kit needed — wear comfortable clothes."',isScam:false,explain:'This looks real! It\'s specific, not asking for anything, and has no urgency tricks or requests for personal details.'},
+  {msg:'&#128241; "Your Netflix account has been suspended! Enter your card details at netflix-verify-account.com to restore access immediately."',isScam:true,explain:'Scam! The website address is fake (real Netflix uses netflix.com), and they\'re asking for card details urgently.'},
+  {msg:'&#128172; "Hey! I\'m from Roblox support. Your account has free Robux waiting — just share your password to verify your account."',isScam:true,explain:'Never share your password! Roblox (and all real companies) will NEVER ask for your password. This is a scam.'},
+  {msg:'&#128140; "Dear customer, your Amazon order #4821 has been dispatched and will arrive Thursday. Track at amazon.co.uk/orders"',isScam:false,explain:'This looks like a real order confirmation — it mentions a specific order number and the real Amazon website. Still, always check with an adult!'},
+  {msg:'&#128178; "URGENT: You owe &#163;800 in unpaid taxes. Pay in the next hour using iTunes gift cards or police will be sent to your home."',isScam:true,explain:'Huge red flags! HMRC never demands gift cards, never contacts like this, and never threatens police in minutes. Scam!'},
+];
+let scamScore=0, scamDone=0;
+const sg=document.getElementById('scam-game');
+scams.forEach((s,i)=>{
+  const d=document.createElement('div');
+  d.style.cssText='background:white;border:2px solid var(--border);border-radius:16px;padding:16px;margin-bottom:12px;';
+  d.innerHTML=`<p style="font-size:14px;font-weight:700;line-height:1.6;margin-bottom:12px;background:#F8F5F0;border-radius:10px;padding:12px;">${s.msg}</p>
+    <div style="display:flex;gap:10px;">
+      <button onclick="answerScam(this.parentElement.parentElement,${i},false,${s.isScam})" style="flex:1;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;border:2px solid #06D6A0;background:#E8F8F3;border-radius:12px;cursor:pointer;color:#05A67D;">&#10003; REAL</button>
+      <button onclick="answerScam(this.parentElement.parentElement,${i},true,${s.isScam})" style="flex:1;padding:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;border:2px solid #EF476F;background:#FFF0F4;border-radius:12px;cursor:pointer;color:#EF476F;">&#128680; SCAM!</button>
+    </div>
+    <div class="scam-feedback" style="display:none;margin-top:10px;font-size:13px;font-weight:700;line-height:1.5;padding:10px;border-radius:10px;"></div>`;
+  sg.appendChild(d);
+});
+function answerScam(card,i,guessedScam,isScam){
+  if(card.dataset.done)return;
+  card.dataset.done='1';
+  card.querySelectorAll('button').forEach(b=>b.disabled=true);
+  const correct=guessedScam===isScam;
+  if(correct)scamScore++;
+  scamDone++;
+  const fb=card.querySelector('.scam-feedback');
+  fb.style.display='block';
+  fb.style.background=correct?'#E8F8F3':'#FFF0F4';
+  fb.style.color=correct?'#05A67D':'#EF476F';
+  fb.innerHTML=(correct?'&#10003; Correct! ':'&#10007; Not quite — ')+(isScam?'&#128680; This IS a scam. ':'&#10003; This is REAL. ')+scams[i].explain;
+  if(scamDone===scams.length){
+    const sr=document.getElementById('scam-score');
+    sr.style.display='block';
+    sr.style.color=scamScore>=5?'#05A67D':'var(--ACCENT)';
+    sr.textContent=scamScore+'/'+scams.length+' correct! '+(scamScore===scams.length?'&#127881; Perfect — you\'re a real Scam Buster!':scamScore>=4?'&#128737;&#65039; Great detective work!':'&#128218; Keep practising — scammers are sneaky!');
+  }
+}
+</script>
+
+</div>
+</body>
+</html>

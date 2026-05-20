@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Money Tree — Grow Your Fortune!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #FFF9F0;
+    --sun: #FFD166;
+    --leaf: #06D6A0;
+    --leaf-dark: #05A67D;
+    --trunk: #8B5E3C;
+    --soil: #C68B59;
+    --coin: #FFB703;
+    --coin-dark: #e6a202;
+    --accent: #EF476F;
+    --blue: #118AB2;
+    --purple: #7B2D8B;
+    --text: #2D2A26;
+    --text-muted: #8C7B6B;
+    --card-bg: #FFFDF8;
+    --card-border: #F0E8D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--sky);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, #FFF3C4 0%, transparent 50%),
+      radial-gradient(ellipse at 85% 80%, #D4F5EC 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .header-emoji {
+    font-size: 52px;
+    display: block;
+    animation: bounce 2s ease-in-out infinite;
+    margin-bottom: 8px;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 42px;
+    color: var(--leaf-dark);
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+  }
+
+  .header h1 span {
+    color: var(--coin);
+    -webkit-text-stroke: 1.5px var(--coin-dark);
+  }
+
+  .header p {
+    font-size: 17px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* Buffett quote card */
+  .quote-card {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: white;
+    border-radius: 20px;
+    padding: 20px 24px;
+    margin: 0 auto 32px;
+    max-width: 580px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+
+  .buffett-avatar {
+    font-size: 44px;
+    flex-shrink: 0;
+  }
+
+  .quote-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #CBD5E1;
+  }
+
+  .quote-card strong {
+    display: block;
+    font-family: 'Fredoka One', cursive;
+    font-size: 17px;
+    color: var(--coin);
+    margin-bottom: 6px;
+  }
+
+  /* Main layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  @media (max-width: 680px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 30px; }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+
+  .card h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Slider controls */
+  .control-group {
+    margin-bottom: 20px;
+  }
+
+  .control-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .control-label span:first-child {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .control-value {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    color: var(--leaf-dark);
+    background: #E8F8F3;
+    padding: 2px 12px;
+    border-radius: 20px;
+    border: 2px solid var(--leaf);
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 8px;
+    background: #E8E0D4;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--leaf);
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+
+  /* Tree visualiser */
+  .tree-card {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .tree-scene {
+    position: relative;
+    height: 260px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+
+  /* SVG tree */
+  .tree-svg {
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: bottom center;
+  }
+
+  /* Floating coins */
+  .coin {
+    position: absolute;
+    font-size: 22px;
+    animation: floatCoin 3s ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .coin.visible { opacity: 1; }
+
+  @keyframes floatCoin {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-12px) rotate(5deg); }
+  }
+
+  /* Stats bar */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .stat-box {
+    border-radius: 14px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .stat-box.invested {
+    background: #EFF6FF;
+    border: 2px solid #BFDBFE;
+  }
+
+  .stat-box.growth {
+    background: #F0FDF4;
+    border: 2px solid #BBF7D0;
+  }
+
+  .stat-box.total {
+    background: #FFFBEB;
+    border: 2px solid #FDE68A;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .stat-value {
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    line-height: 1.1;
+  }
+
+  .stat-box.invested .stat-value { color: var(--blue); }
+  .stat-box.growth .stat-value { color: var(--leaf-dark); }
+  .stat-box.total .stat-value { color: #B45309; }
+
+  /* Chart */
+  .chart-area {
+    position: relative;
+    height: 180px;
+    margin-top: 20px;
+  }
+
+  canvas {
+    width: 100% !important;
+  }
+
+  /* Fun fact bubbles */
+  .fact-card {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #7B2D8B, #4A1D96);
+    border-radius: 20px;
+    padding: 22px 28px;
+    color: white;
+    box-shadow: 0 8px 32px rgba(123, 45, 139, 0.3);
+  }
+
+  .fact-card h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 20px;
+    color: #F9A8D4;
+    margin-bottom: 14px;
+  }
+
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .fact-bubble {
+    background: rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 14px;
+    font-size: 14px;
+    line-height: 1.5;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .fact-bubble .fact-icon {
+    font-size: 24px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .fact-bubble strong {
+    color: var(--coin);
+  }
+
+  /* WOW moment */
+  .wow-banner {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, var(--coin), #FF8C42);
+    border-radius: 20px;
+    padding: 20px 28px;
+    text-align: center;
+    color: white;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    box-shadow: 0 8px 32px rgba(255, 183, 3, 0.4);
+    transition: all 0.5s;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.3;
+  }
+
+  /* Age markers on chart */
+  .age-label {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    top: 0;
+  }
+
+  /* Milestone badge */
+  .milestones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .milestone {
+    background: #FEF9C3;
+    border: 2px solid #FDE047;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #78350F;
+    transition: all 0.3s;
+  }
+
+  .milestone.unlocked {
+    background: var(--coin);
+    border-color: var(--coin-dark);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255,183,3,0.4);
+  }
+
+  .help-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div style="margin-bottom:16px;">
+    <a href="index.html"
+       style="display:inline-flex;align-items:center;gap:8px;color:#7B2D8B;font-weight:700;font-size:15px;text-decoration:none;padding:8px 16px;background:white;border:2px solid #DDD6FE;border-radius:12px;transition:background .2s;"
+       onmouseover="this.style.background='#F5F0FF'" onmouseout="this.style.background='white'">
+      🏫 ← Money School Home
+    </a>
+  </div>
+
+  <div style="text-align:center;margin-bottom:16px;">
+    <a href="index.html" style="display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:14px;text-decoration:none;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:7px 16px;transition:background .2s;" onmouseover="this.style.background='#F5F0FF'" onmouseout="this.style.background='white'">&#8592; Back to Money School</a>
+  </div>
+
+  <div class="header">
+    <span class="header-emoji">🌱</span>
+    <h1>The <span>Money Tree</span> 🌳</h1>
+    <p>Watch a tiny seed grow into a giant fortune — just by being patient!</p>
+  </div>
+
+  <div class="quote-card">
+    <div class="buffett-avatar">🎩</div>
+    <div>
+      <strong>Warren Buffett's Secret</strong>
+      Warren started investing when he was just 10 years old. Today he's worth over $100 billion! His biggest tip? <em>"The best time to plant a money tree is when you're young."</em> The earlier you start, the bigger it grows!
+    </div>
+  </div>
+
+  <div class="main-grid">
+
+    <!-- Controls -->
+    <div class="card">
+      <h2>🎮 Grow Your Tree</h2>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>🌱 Starting seeds (£)</span>
+        </div>
+        <input type="number" id="sl-start" min="0" value="50" step="1" style="width:100%;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:700;color:var(--leaf-dark);background:#E8F8F3;border:2px solid var(--leaf);border-radius:12px;outline:none;">
+        <p class="help-text">Type any amount — no limits!</p>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>🎂 Your age today</span>
+        </div>
+        <input type="number" id="sl-age" min="1" max="99" value="8" step="1" style="width:100%;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:700;color:var(--purple);background:#F5F0FF;border:2px solid #C4B5FD;border-radius:12px;outline:none;">
+        <p class="help-text">The chart will show your actual age at each point!</p>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>💰 Add each year (£)</span>
+          <span class="control-value" id="val-yearly">£100</span>
+        </div>
+        <input type="range" id="sl-yearly" min="0" max="10000" value="100" step="50">
+        <p class="help-text">Like saving birthday money every year</p>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>📈 Magic growth rate (%)</span>
+          <span class="control-value" id="val-rate">5%</span>
+        </div>
+        <input type="range" id="sl-rate" min="1" max="12" value="5" step="0.5">
+        <p class="help-text">How fast the money tree grows each year</p>
+      </div>
+
+      <div class="control-group">
+        <div class="control-label">
+          <span>⏳ Years to wait</span>
+          <span class="control-value" id="val-years">30</span>
+        </div>
+        <input type="range" id="sl-years" min="5" max="70" value="30" step="1">
+        <p class="help-text">Patience = the secret superpower!</p>
+      </div>
+
+      <div class="milestones" id="milestones">
+        <div class="milestone" data-target="1000">🌿 £1,000</div>
+        <div class="milestone" data-target="5000">🌲 £5,000</div>
+        <div class="milestone" data-target="10000">🏡 £10k</div>
+        <div class="milestone" data-target="50000">🚀 £50k</div>
+        <div class="milestone" data-target="100000">💎 £100k</div>
+        <div class="milestone" data-target="500000">👑 £500k</div>
+        <div class="milestone" data-target="1000000">🌟 £1M!</div>
+      </div>
+    </div>
+
+    <!-- Tree + stats -->
+    <div class="card">
+      <h2>🌳 Your Money Tree</h2>
+
+      <div class="tree-scene" id="tree-scene">
+        <!-- Coins -->
+        <div class="coin" id="coin1" style="right:30%;top:10%;animation-delay:0s">🪙</div>
+        <div class="coin" id="coin2" style="right:15%;top:30%;animation-delay:0.8s">💰</div>
+        <div class="coin" id="coin3" style="left:20%;top:15%;animation-delay:1.4s">🪙</div>
+        <div class="coin" id="coin4" style="right:10%;top:55%;animation-delay:0.4s">💰</div>
+
+        <svg class="tree-svg" id="tree-svg" viewBox="0 0 200 220" width="200" height="220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ground -->
+          <ellipse cx="100" cy="210" rx="70" ry="12" fill="#C68B59" opacity="0.4"/>
+          <!-- Trunk -->
+          <rect id="trunk" x="88" y="130" width="24" height="80" rx="8" fill="#8B5E3C"/>
+          <!-- Roots -->
+          <path d="M100 200 Q80 210 65 215" stroke="#7A4F2E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M100 200 Q120 210 135 215" stroke="#7A4F2E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Canopy layers -->
+          <ellipse id="canopy3" cx="100" cy="140" rx="55" ry="40" fill="#06D6A0" opacity="0.6"/>
+          <ellipse id="canopy2" cx="100" cy="115" rx="50" ry="40" fill="#06D6A0" opacity="0.8"/>
+          <ellipse id="canopy1" cx="100" cy="90" rx="45" ry="38" fill="#06D6A0"/>
+          <ellipse id="canopy-top" cx="100" cy="65" rx="35" ry="32" fill="#05C490"/>
+          <!-- Apples / coins on tree -->
+          <circle id="apple1" cx="75" cy="80" r="8" fill="#EF476F" opacity="0"/>
+          <circle id="apple2" cx="125" cy="85" r="8" fill="#FFB703" opacity="0"/>
+          <circle id="apple3" cx="90" cy="105" r="7" fill="#EF476F" opacity="0"/>
+          <circle id="apple4" cx="115" cy="100" r="7" fill="#FFB703" opacity="0"/>
+          <circle id="apple5" cx="100" cy="70" r="9" fill="#EF476F" opacity="0"/>
+          <circle id="apple6" cx="78" cy="115" r="6" fill="#FFB703" opacity="0"/>
+          <circle id="apple7" cx="122" cy="118" r="6" fill="#EF476F" opacity="0"/>
+          <!-- Star on top -->
+          <text id="tree-star" x="100" y="45" text-anchor="middle" font-size="18" opacity="0">⭐</text>
+        </svg>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box invested">
+          <div class="stat-label">You put in</div>
+          <div class="stat-value" id="stat-invested">£3,050</div>
+        </div>
+        <div class="stat-box growth">
+          <div class="stat-label">Magic growth</div>
+          <div class="stat-value" id="stat-growth">£3,321</div>
+        </div>
+        <div class="stat-box total">
+          <div class="stat-label">Total! 🎉</div>
+          <div class="stat-value" id="stat-total">£6,371</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wow banner -->
+    <div class="wow-banner" id="wow-banner">
+      🌟 Loading your money adventure...
+    </div>
+
+    <!-- Chart card -->
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>📊 Watch It Grow Over Time</h2>
+      <div class="chart-area">
+        <canvas id="growthChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Fun facts -->
+    <div class="fact-card">
+      <h2>🧠 Did You Know?</h2>
+      <div class="facts-grid">
+        <div class="fact-bubble">
+          <span class="fact-icon">🐇</span>
+          <strong>Compound interest is like a snowball!</strong> It rolls down a hill getting bigger and bigger. Your money earns money, which then earns even MORE money!
+        </div>
+        <div class="fact-bubble">
+          <span class="fact-icon">⏰</span>
+          <strong>Time is the secret superpower.</strong> Starting at age 8 instead of age 18 can make you <strong>THREE TIMES</strong> richer by the time you're grown up!
+        </div>
+        <div class="fact-bubble">
+          <span class="fact-icon">🌰</span>
+          <strong>Warren Buffett bought his first shares aged 11</strong> — just like buying a small part of a real company. He called compound interest <em>"the eighth wonder of the world."</em>
+        </div>
+        <div class="fact-bubble">
+          <span class="fact-icon">🔢</span>
+          <strong>The Rule of 72:</strong> Divide 72 by your interest rate to find how many years to DOUBLE your money. At 6%, that's just 12 years — your money duplicates like magic!
+        </div>
+      </div>
+    </div>
+
+    <!-- Next step link -->
+    <div style="grid-column:1/-1;text-align:center;padding:8px 0 16px;">
+      <a href="money-tree-custom.html" id="next-link"
+        style="display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,#7B2D8B,#4A1D96);color:white;font-family:'Fredoka One',cursive;font-size:22px;padding:18px 36px;border-radius:20px;text-decoration:none;box-shadow:0 8px 32px rgba(123,45,139,0.35);transition:transform 0.2s,box-shadow 0.2s;"
+        onmouseover="this.style.transform='scale(1.04)';this.style.boxShadow='0 12px 40px rgba(123,45,139,0.45)'"
+        onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 8px 32px rgba(123,45,139,0.35)'">
+        🚀 Ready for the Next Level? Set your own amount for every year! ➜
+      </a>
+      <p style="margin-top:10px;font-size:13px;color:var(--text-muted);font-style:italic;">Your starting amount, age and growth rate carry over automatically</p>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  // --- State ---
+  let chart = null;
+
+  function fmtMoney(n) {
+    if (n >= 1000000) return '£' + (n / 1000000).toFixed(2) + 'M';
+    if (n >= 1000) return '£' + Math.round(n).toLocaleString('en-GB');
+    return '£' + Math.round(n);
+  }
+
+  function compute() {
+    const start   = parseFloat(document.getElementById('sl-start').value) || 0;
+    const yearly  = parseFloat(document.getElementById('sl-yearly').value);
+    const rate    = parseFloat(document.getElementById('sl-rate').value) / 100;
+    const years   = parseInt(document.getElementById('sl-years').value);
+    const age     = parseInt(document.getElementById('sl-age').value) || 0;
+
+    // Update labels
+    document.getElementById('val-yearly').textContent = '£' + yearly;
+    document.getElementById('val-rate').textContent   = parseFloat(document.getElementById('sl-rate').value) + '%';
+    document.getElementById('val-years').textContent  = years + ' yrs';
+
+    // Compute year-by-year
+    let balance = start;
+    let totalInvested = start;
+    const labels = ['Age ' + age];
+    const balances = [Math.round(balance)];
+    const invested = [Math.round(totalInvested)];
+
+    for (let y = 1; y <= years; y++) {
+      balance = balance * (1 + rate) + yearly;
+      totalInvested += yearly;
+      if (y % Math.max(1, Math.floor(years / 15)) === 0 || y === years) {
+        labels.push('Age ' + (age + y));
+        balances.push(Math.round(balance));
+        invested.push(Math.round(totalInvested));
+      }
+    }
+
+    const finalBalance = balance;
+    const finalInvested = totalInvested;
+    const finalGrowth = finalBalance - finalInvested;
+
+    // Update stats
+    document.getElementById('stat-invested').textContent = fmtMoney(finalInvested);
+    document.getElementById('stat-growth').textContent   = fmtMoney(finalGrowth);
+    document.getElementById('stat-total').textContent    = fmtMoney(finalBalance);
+
+    // Update tree size
+    const growthRatio = Math.min(finalBalance / (finalInvested || 1), 8);
+    const scale = 0.5 + Math.min(growthRatio / 8, 1) * 1.0;
+    document.getElementById('tree-svg').style.transform = `scale(${scale.toFixed(2)})`;
+
+    // Apples visibility
+    const appleThresholds = [1000, 3000, 6000, 12000, 25000, 50000, 100000];
+    for (let i = 1; i <= 7; i++) {
+      const apple = document.getElementById('apple' + i);
+      apple.setAttribute('opacity', finalBalance >= appleThresholds[i-1] ? '1' : '0');
+    }
+
+    // Star
+    const star = document.getElementById('tree-star');
+    star.setAttribute('opacity', finalBalance >= 100000 ? '1' : '0');
+
+    // Coins
+    const showCoins = finalBalance >= 5000;
+    document.querySelectorAll('.coin').forEach(c => {
+      c.classList.toggle('visible', showCoins);
+    });
+
+    // Milestones
+    document.querySelectorAll('.milestone').forEach(m => {
+      const target = parseFloat(m.dataset.target);
+      m.classList.toggle('unlocked', finalBalance >= target);
+    });
+
+    // Wow banner
+    const multipler = finalBalance / (finalInvested || 1);
+    let wowMsg = '';
+    const rateLabel = parseFloat(document.getElementById('sl-rate').value) + '%';
+
+    if (finalBalance >= 1000000) {
+      wowMsg = `🌟 YOU'RE A MILLIONAIRE! Your money grew ${multipler.toFixed(1)}× — from ${fmtMoney(finalInvested)} to ${fmtMoney(finalBalance)}! 🎉🎉🎉`;
+    } else if (finalBalance >= 100000) {
+      wowMsg = `👑 Amazing! Your ${fmtMoney(finalInvested)} turned into ${fmtMoney(finalBalance)} — that's ${multipler.toFixed(1)}× bigger! Patience is a superpower! 🚀`;
+    } else if (finalBalance >= 10000) {
+      wowMsg = `🌲 Wow! Your money tree grew ${multipler.toFixed(1)}× bigger! You put in ${fmtMoney(finalInvested)} and got back ${fmtMoney(finalBalance)}. Magic! ✨`;
+    } else {
+      wowMsg = `🌱 Your £${Math.round(finalInvested)} grew to ${fmtMoney(finalBalance)} at ${rateLabel} — and it keeps growing every single year!`;
+    }
+    document.getElementById('wow-banner').textContent = wowMsg;
+
+    // Chart
+    updateChart(labels, balances, invested);
+  }
+
+  function updateChart(labels, balances, invested) {
+    const ctx = document.getElementById('growthChart').getContext('2d');
+
+    if (chart) {
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = balances;
+      chart.data.datasets[1].data = invested;
+      chart.update('active');
+      return;
+    }
+
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Total Value 🌳',
+            data: balances,
+            borderColor: '#06D6A0',
+            backgroundColor: 'rgba(6,214,160,0.15)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#06D6A0',
+            borderWidth: 3,
+          },
+          {
+            label: 'You Put In 💰',
+            data: invested,
+            borderColor: '#118AB2',
+            backgroundColor: 'rgba(17,138,178,0.08)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#118AB2',
+            borderWidth: 2,
+            borderDash: [6, 3],
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => {
+                const v = ctx.raw;
+                return ' ' + ctx.dataset.label + ': ' + (v >= 1000 ? '£' + Math.round(v).toLocaleString('en-GB') : '£' + Math.round(v));
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { font: { family: 'Nunito', size: 12 }, color: '#8C7B6B' },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          },
+          y: {
+            ticks: {
+              font: { family: 'Nunito', size: 12 },
+              color: '#8C7B6B',
+              callback: v => v >= 1000000 ? '£' + (v/1000000).toFixed(1) + 'M' : v >= 1000 ? '£' + Math.round(v/1000) + 'k' : '£' + v
+            },
+            grid: { color: 'rgba(0,0,0,0.05)' }
+          }
+        }
+      }
+    });
+  }
+
+  // Read profile from URL if arriving from index
+  (function applyURLProfile() {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('name'))   document.getElementById('sl-start') && (document.getElementById('sl-age').value = p.get('age') || document.getElementById('sl-age').value);
+    if (p.get('age'))    document.getElementById('sl-age').value = p.get('age');
+    if (p.get('name'))   document.title = p.get('name') + "'s Money Tree 🌳";
+  })();
+
+  // Update next-page link with current settings
+  function updateNextLink() {
+    const start  = document.getElementById('sl-start').value || 50;
+    const age    = document.getElementById('sl-age').value || 8;
+    const rate   = document.getElementById('sl-rate').value || 5;
+    const years  = document.getElementById('sl-years').value || 30;
+    const link   = document.getElementById('next-link');
+    link.href = `money-tree-custom.html?start=${start}&age=${age}&rate=${rate}&years=${years}`;
+  }
+
+  // Event listeners
+  ['sl-start','sl-age','sl-yearly','sl-rate','sl-years'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => { compute(); updateNextLink(); });
+  });
+
+  // Initial render
+  compute();
+  updateNextLink();
+</script>
+</body>
+</html>

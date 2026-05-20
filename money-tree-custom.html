@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Money Tree — Custom Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #FFF9F0;
+    --leaf: #06D6A0;
+    --leaf-dark: #05A67D;
+    --coin: #FFB703;
+    --coin-dark: #e6a202;
+    --blue: #118AB2;
+    --purple: #7B2D8B;
+    --pink: #EF476F;
+    --purple-light: #F5F0FF;
+    --text: #2D2A26;
+    --text-muted: #8C7B6B;
+    --card-bg: #FFFDF8;
+    --card-border: #F0E8D8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--sky);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 10% 15%, #EDE9FE 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 85%, #D4F5EC 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .page {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 20px 60px;
+  }
+
+  .back-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--purple); font-weight: 700; font-size: 15px;
+    text-decoration: none; margin-bottom: 20px;
+    padding: 8px 16px; background: white;
+    border: 2px solid #DDD6FE; border-radius: 12px;
+    transition: background 0.2s;
+  }
+  .back-link:hover { background: #F5F0FF; }
+
+  .header { text-align: center; margin-bottom: 24px; }
+  .header-emoji { font-size: 48px; display: block; margin-bottom: 8px; animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+  .header h1 { font-family:'Fredoka One',cursive; font-size:36px; color:var(--purple); line-height:1.1; }
+  .header h1 span { color:var(--coin); -webkit-text-stroke:1.5px var(--coin-dark); }
+  .header p { font-size:15px; color:var(--text-muted); margin-top:6px; font-weight:600; }
+
+  /* Name bar */
+  .name-bar {
+    background: white; border: 2px solid var(--card-border);
+    border-radius: 20px; padding: 16px 22px;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+    margin-bottom: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  }
+  .name-bar-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 16px; color: var(--text-muted);
+    white-space: nowrap; align-self: center; padding-bottom: 2px;
+  }
+  .name-item { display:flex; flex-direction:column; gap:4px; flex:1; min-width:140px; }
+  .name-item label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+  .name-item.child  label { color: var(--pink); }
+  .name-item.parent label { color: var(--blue); }
+  .name-item input {
+    padding: 8px 12px; font-family:'Nunito',sans-serif;
+    font-size:17px; font-weight:800; border-radius:10px;
+    border: 2px solid; outline:none; width:100%;
+    transition: border-color 0.2s;
+  }
+  .name-item.child  input { color:var(--pink);  background:#FFF0F4; border-color:#FBCFE8; }
+  .name-item.parent input { color:var(--blue);  background:#EFF6FF; border-color:#BFDBFE; }
+
+  /* Settings bar */
+  .settings-bar {
+    background: white; border: 2px solid var(--card-border);
+    border-radius: 20px; padding: 18px 22px;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+    margin-bottom: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+  }
+  .setting-item { display:flex; flex-direction:column; gap:4px; flex:1; min-width:110px; }
+  .setting-item label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); }
+  .setting-item input {
+    padding: 7px 10px; font-family:'Nunito',sans-serif;
+    font-size:16px; font-weight:700; border-radius:10px;
+    border: 2px solid var(--card-border); outline:none;
+    background: var(--sky); color:var(--text); width:100%;
+    transition: border-color 0.2s;
+  }
+  .setting-item input:focus { border-color: var(--leaf); }
+  .setting-item input.age-input   { color:var(--purple);  background:#F5F0FF;  border-color:#C4B5FD; }
+  .setting-item input.rate-input  { color:var(--leaf-dark); background:#E8F8F3; border-color:var(--leaf); }
+  .setting-item input.start-input { color:#B45309; background:#FFFBEB; border-color:#FDE68A; }
+
+  /* Main layout */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+    align-items: start;
+  }
+  @media (max-width: 800px) { .main-grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card-bg); border: 2px solid var(--card-border);
+    border-radius: 20px; padding: 22px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  }
+  .card h2 {
+    font-family:'Fredoka One',cursive; font-size:19px;
+    margin-bottom:14px; display:flex; align-items:center; gap:8px;
+  }
+
+  /* Bulk bar */
+  .bulk-bar {
+    display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    margin-bottom:12px; padding:11px 13px;
+    background:#F5F0FF; border-radius:14px; border:1.5px solid #DDD6FE;
+  }
+  .bulk-bar label { font-size:13px; font-weight:700; color:var(--purple); white-space:nowrap; }
+  .bulk-bar input {
+    padding:5px 9px; font-family:'Nunito',sans-serif; font-size:14px;
+    font-weight:700; border-radius:8px; border:1.5px solid #C4B5FD;
+    outline:none; background:white; width:80px; color:var(--purple);
+  }
+  .btn {
+    padding:6px 12px; font-family:'Nunito',sans-serif; font-size:13px;
+    font-weight:700; border-radius:10px; border:none; cursor:pointer;
+    transition:transform 0.15s, box-shadow 0.15s; white-space:nowrap;
+  }
+  .btn:hover  { transform:scale(1.04); }
+  .btn:active { transform:scale(0.97); }
+  .btn-pink   { background:var(--pink); color:white; box-shadow:0 4px 12px rgba(239,71,111,0.3); }
+  .btn-blue   { background:var(--blue); color:white; box-shadow:0 4px 12px rgba(17,138,178,0.3); }
+  .btn-amber  { background:var(--coin); color:#78350F; box-shadow:0 4px 12px rgba(255,183,3,0.3); }
+  .btn-gray   { background:#E8E0D4; color:var(--text-muted); }
+
+  /* Column headers */
+  .year-header {
+    display: grid;
+    grid-template-columns: 68px 1fr 1fr 82px 86px 96px;
+    gap: 5px;
+    padding: 0 8px 8px;
+    font-size: 10px; font-weight:700; text-transform:uppercase;
+    letter-spacing:0.4px; color:var(--text-muted);
+    border-bottom: 2px solid var(--card-border);
+    margin-bottom: 6px;
+  }
+  .year-header .col-child  { color:var(--pink); }
+  .year-header .col-parent { color:var(--blue); }
+  .year-header .col-total  { color:var(--leaf-dark); text-align:right; }
+  .year-header .col-month  { color:var(--coin-dark); text-align:right; }
+  .year-header .col-bal    { color:#B45309; text-align:right; }
+
+  /* Year table */
+  .year-table {
+    display:flex; flex-direction:column; gap:5px;
+    max-height: 500px; overflow-y:auto; padding-right:4px;
+  }
+  .year-table::-webkit-scrollbar { width:6px; }
+  .year-table::-webkit-scrollbar-track { background:#F0E8D8; border-radius:4px; }
+  .year-table::-webkit-scrollbar-thumb { background:var(--leaf); border-radius:4px; }
+
+  .year-row {
+    display: grid;
+    grid-template-columns: 68px 1fr 1fr 82px 86px 96px;
+    gap: 5px;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 12px;
+    background: white;
+    border: 1.5px solid transparent;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .year-row:hover { border-color:var(--leaf); background:#F0FDF8; }
+  .year-row.milestone-row { border-color:var(--coin); background:#FFFBEB; }
+
+  .year-label {
+    font-family:'Fredoka One',cursive; font-size:14px;
+    color:var(--purple); white-space:nowrap;
+  }
+
+  .contrib-input {
+    width:100%; padding:5px 6px;
+    font-family:'Nunito',sans-serif; font-size:13px; font-weight:700;
+    border-radius:8px; outline:none; text-align:right;
+  }
+  .contrib-input.child-input  { color:var(--pink);  background:#FFF0F4; border:1.5px solid #FBCFE8; }
+  .contrib-input.parent-input { color:var(--blue);  background:#EFF6FF; border:1.5px solid #BFDBFE; }
+
+  .col-total-val {
+    font-size:12px; font-weight:700; color:var(--leaf-dark);
+    text-align:right; white-space:nowrap;
+  }
+  .col-month-val {
+    font-size:12px; font-weight:700; color:var(--coin-dark);
+    text-align:right; white-space:nowrap;
+  }
+  .year-balance {
+    font-size:12px; font-weight:700; color:#B45309;
+    text-align:right; white-space:nowrap;
+  }
+
+  /* Right panel */
+  .right-panel { display:flex; flex-direction:column; gap:14px; }
+
+  .stat-box { border-radius:14px; padding:13px 14px; text-align:center; }
+  .stat-box.child-stat  { background:#FFF0F4; border:2px solid #FBCFE8; }
+  .stat-box.parent-stat { background:#EFF6FF; border:2px solid #BFDBFE; }
+  .stat-box.growth      { background:#F0FDF4; border:2px solid #BBF7D0; }
+  .stat-box.total       { background:#FFFBEB; border:2px solid #FDE68A; }
+
+  .stat-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin-bottom:3px; }
+  .stat-value { font-family:'Fredoka One',cursive; font-size:22px; line-height:1.1; }
+  .stat-box.child-stat  .stat-value { color:var(--pink); }
+  .stat-box.parent-stat .stat-value { color:var(--blue); }
+  .stat-box.growth      .stat-value { color:var(--leaf-dark); }
+  .stat-box.total       .stat-value { color:#B45309; }
+
+  .wow-banner {
+    background:linear-gradient(135deg,var(--coin),#FF8C42);
+    border-radius:18px; padding:16px 18px; text-align:center;
+    color:white; font-family:'Fredoka One',cursive; font-size:16px;
+    box-shadow:0 8px 24px rgba(255,183,3,0.35); line-height:1.4;
+  }
+
+  .milestones { display:flex; flex-wrap:wrap; gap:5px; }
+  .milestone {
+    background:#FEF9C3; border:2px solid #FDE047;
+    border-radius:20px; padding:3px 9px;
+    font-size:12px; font-weight:700; color:#78350F; transition:all 0.3s;
+  }
+  .milestone.unlocked {
+    background:var(--coin); border-color:var(--coin-dark); color:white;
+    transform:scale(1.05); box-shadow:0 4px 12px rgba(255,183,3,0.4);
+  }
+
+  /* Chart */
+  .chart-wrap {
+    background:var(--card-bg); border:2px solid var(--card-border);
+    border-radius:20px; padding:20px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.06); grid-column:1/-1;
+  }
+  .chart-wrap h2 { font-family:'Fredoka One',cursive; font-size:19px; margin-bottom:10px; }
+  .chart-area { position:relative; height:220px; }
+  .chart-legend { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:10px; font-size:13px; font-weight:700; }
+  .legend-item { display:flex; align-items:center; gap:6px; }
+  .legend-dot  { width:12px; height:12px; border-radius:3px; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a href="index.html"
+     style="display:inline-flex;align-items:center;gap:8px;color:#7B2D8B;font-weight:700;font-size:15px;text-decoration:none;padding:8px 16px;background:white;border:2px solid #DDD6FE;border-radius:12px;margin-bottom:12px;transition:background .2s;"
+     onmouseover="this.style.background='#F5F0FF'" onmouseout="this.style.background='white'">
+    🏫 ← Money School Home
+  </a>
+
+  <a href="money-tree.html" class="back-link" id="back-link">← Back to Money Tree</a>
+
+  <div class="header">
+    <span class="header-emoji">🚀</span>
+    <h1>Your <span>Custom Plan</span> 🗓️</h1>
+    <p>Set each person's contribution for every year — make it personal!</p>
+  </div>
+
+  <!-- Name inputs -->
+  <div class="name-bar">
+    <span class="name-bar-title">✏️ Who's contributing?</span>
+    <div class="name-item child">
+      <label>Child's name</label>
+      <input type="text" id="name-child" value="Amelie" maxlength="20" placeholder="e.g. Amelie">
+    </div>
+    <div class="name-item parent">
+      <label>Parent's name</label>
+      <input type="text" id="name-parent" value="Daddy" maxlength="20" placeholder="e.g. Daddy">
+    </div>
+  </div>
+
+  <!-- Global settings -->
+  <div class="settings-bar">
+    <div class="setting-item">
+      <label>🌱 Starting amount (£)</label>
+      <input type="number" id="g-start" class="start-input" value="50" min="0" step="1">
+    </div>
+    <div class="setting-item">
+      <label>🎂 Age now</label>
+      <input type="number" id="g-age" class="age-input" value="8" min="1" max="99" step="1">
+    </div>
+    <div class="setting-item">
+      <label>📈 Growth rate (%)</label>
+      <input type="number" id="g-rate" class="rate-input" value="5" min="0.1" max="20" step="0.1">
+    </div>
+    <div class="setting-item">
+      <label>⏳ Number of years</label>
+      <input type="number" id="g-years" value="30" min="1" max="80" step="1">
+    </div>
+  </div>
+
+  <div class="main-grid">
+
+    <!-- Year table -->
+    <div class="card">
+      <h2>💰 Contributions By Year</h2>
+
+      <div class="bulk-bar">
+        <label>Set all to £</label>
+        <input type="number" id="bulk-val" value="200" min="0" step="50">
+        <button class="btn btn-pink"  onclick="setAll('child')">All <span class="dyn-child-name">Amelie</span></button>
+        <button class="btn btn-blue"  onclick="setAll('parent')">All <span class="dyn-parent-name">Daddy</span></button>
+        <button class="btn btn-gray"  onclick="clearAll()">Clear all</button>
+        <button class="btn btn-amber" onclick="applyGrowingPlan()">📈 Life plan</button>
+      </div>
+
+      <div class="year-header">
+        <span>Age</span>
+        <span class="col-child"  id="hdr-child">Amelie /yr</span>
+        <span class="col-parent" id="hdr-parent">Daddy /yr</span>
+        <span class="col-total">Total/yr</span>
+        <span class="col-month">Per month</span>
+        <span class="col-bal">Balance</span>
+      </div>
+
+      <div class="year-table" id="year-table"></div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+
+      <div class="card">
+        <h2>🌳 Your Results</h2>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div class="stat-box child-stat">
+            <div class="stat-label" id="lbl-child-stat">Amelie puts in</div>
+            <div class="stat-value" id="stat-child">—</div>
+          </div>
+          <div class="stat-box parent-stat">
+            <div class="stat-label" id="lbl-parent-stat">Daddy puts in</div>
+            <div class="stat-value" id="stat-parent">—</div>
+          </div>
+          <div class="stat-box growth">
+            <div class="stat-label">Magic growth 🌱</div>
+            <div class="stat-value" id="stat-growth">—</div>
+          </div>
+          <div class="stat-box total">
+            <div class="stat-label">Grand total 🎉</div>
+            <div class="stat-value" id="stat-total">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wow-banner" id="wow-banner">✨ Set your contributions to see the future!</div>
+
+      <div class="card">
+        <h2>🏆 Milestones</h2>
+        <div class="milestones" id="milestones">
+          <div class="milestone" data-target="1000">🌿 £1k</div>
+          <div class="milestone" data-target="5000">🌲 £5k</div>
+          <div class="milestone" data-target="10000">🏡 £10k</div>
+          <div class="milestone" data-target="50000">🚀 £50k</div>
+          <div class="milestone" data-target="100000">💎 £100k</div>
+          <div class="milestone" data-target="500000">👑 £500k</div>
+          <div class="milestone" data-target="1000000">🌟 £1M!</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-wrap">
+      <h2>📊 Year by Year Growth</h2>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#06D6A0"></div>Total value</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#EF476F"></div><span id="legend-child">Amelie's contributions</span></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#118AB2"></div><span id="legend-parent">Daddy's contributions</span></div>
+      </div>
+      <div class="chart-area">
+        <canvas id="growthChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  let chart = null;
+  let childAmounts  = [];
+  let parentAmounts = [];
+
+  // --- URL params ---
+  const params = new URLSearchParams(window.location.search);
+  document.getElementById('g-start').value = parseFloat(params.get('start')) || 50;
+  document.getElementById('g-age').value   = parseInt(params.get('age'))     || 8;
+  document.getElementById('g-rate').value  = parseFloat(params.get('rate'))  || 5;
+  document.getElementById('g-years').value = parseInt(params.get('years'))   || 30;
+
+  // --- Name helpers ---
+  function childName()  { return document.getElementById('name-child').value.trim()  || 'Child';  }
+  function parentName() { return document.getElementById('name-parent').value.trim() || 'Parent'; }
+
+  function updateNames() {
+    const cn = childName(), pn = parentName();
+    document.getElementById('hdr-child').textContent       = cn + ' /yr';
+    document.getElementById('hdr-parent').textContent      = pn + ' /yr';
+    document.getElementById('lbl-child-stat').textContent  = cn + ' puts in';
+    document.getElementById('lbl-parent-stat').textContent = pn + ' puts in';
+    document.getElementById('legend-child').textContent    = cn + "'s contributions";
+    document.getElementById('legend-parent').textContent   = pn + "'s contributions";
+    document.querySelectorAll('.dyn-child-name').forEach(el  => el.textContent = cn);
+    document.querySelectorAll('.dyn-parent-name').forEach(el => el.textContent = pn);
+    if (chart) {
+      chart.data.datasets[1].label = cn + "'s contributions";
+      chart.data.datasets[2].label = pn + "'s contributions";
+      chart.update('none');
+    }
+    compute();
+  }
+
+  // --- Helpers ---
+  function fmtMoney(n) {
+    if (n >= 1000000) return '£' + (n / 1000000).toFixed(2) + 'M';
+    if (n >= 1000)    return '£' + Math.round(n).toLocaleString('en-GB');
+    return '£' + Math.round(n);
+  }
+
+  function fmtMonth(annual) {
+    const m = annual / 12;
+    return '£' + (Number.isInteger(m) ? m : m.toFixed(2));
+  }
+
+  function getSettings() {
+    return {
+      start: parseFloat(document.getElementById('g-start').value) || 0,
+      age:   parseInt(document.getElementById('g-age').value)     || 0,
+      rate:  parseFloat(document.getElementById('g-rate').value)  / 100,
+      years: parseInt(document.getElementById('g-years').value)   || 1,
+    };
+  }
+
+  // --- Build rows ---
+  function buildRows() {
+    const { years, age } = getSettings();
+
+    const prevC = [...childAmounts];
+    const prevP = [...parentAmounts];
+    childAmounts  = [];
+    parentAmounts = [];
+
+    for (let y = 0; y < years; y++) {
+      childAmounts.push(prevC[y]  !== undefined ? prevC[y]  : 100);
+      parentAmounts.push(prevP[y] !== undefined ? prevP[y] : 400);
+    }
+
+    const table = document.getElementById('year-table');
+    table.innerHTML = '';
+
+    for (let y = 0; y < years; y++) {
+      const rowAge    = age + y;
+      const isDecade  = rowAge % 10 === 0;
+      const totalAnn  = (childAmounts[y] || 0) + (parentAmounts[y] || 0);
+      const row       = document.createElement('div');
+      row.className   = 'year-row' + (isDecade ? ' milestone-row' : '');
+
+      row.innerHTML = `
+        <span class="year-label">Age ${rowAge}</span>
+        <input type="number" class="contrib-input child-input"
+               min="0" step="50" value="${childAmounts[y]}" placeholder="${childName()}">
+        <input type="number" class="contrib-input parent-input"
+               min="0" step="50" value="${parentAmounts[y]}" placeholder="${parentName()}">
+        <span class="col-total-val" id="tot-${y}">${fmtMoney(totalAnn)}</span>
+        <span class="col-month-val" id="mth-${y}">${fmtMonth(totalAnn)}</span>
+        <span class="year-balance"  id="bal-${y}">—</span>
+      `;
+
+      const ci = row.querySelector('.child-input');
+      const pi = row.querySelector('.parent-input');
+
+      ci.addEventListener('input', () => {
+        childAmounts[y] = parseFloat(ci.value) || 0;
+        refreshRowTotals(y);
+        compute();
+      });
+      pi.addEventListener('input', () => {
+        parentAmounts[y] = parseFloat(pi.value) || 0;
+        refreshRowTotals(y);
+        compute();
+      });
+
+      table.appendChild(row);
+    }
+
+    compute();
+  }
+
+  function refreshRowTotals(y) {
+    const total = (childAmounts[y] || 0) + (parentAmounts[y] || 0);
+    const t = document.getElementById('tot-' + y);
+    const m = document.getElementById('mth-' + y);
+    if (t) t.textContent = fmtMoney(total);
+    if (m) m.textContent = fmtMonth(total);
+  }
+
+  // --- Bulk helpers ---
+  function setAll(who) {
+    const v = parseFloat(document.getElementById('bulk-val').value) || 0;
+    const { years } = getSettings();
+    const sel = who === 'child' ? '.child-input' : '.parent-input';
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.value = v;
+      if (who === 'child')  childAmounts[i]  = v;
+      else                  parentAmounts[i] = v;
+      refreshRowTotals(i);
+    });
+    compute();
+  }
+
+  function clearAll() {
+    const { years } = getSettings();
+    for (let y = 0; y < years; y++) {
+      childAmounts[y] = 0; parentAmounts[y] = 0;
+      refreshRowTotals(y);
+    }
+    document.querySelectorAll('.child-input,.parent-input').forEach(el => el.value = 0);
+    compute();
+  }
+
+  function applyGrowingPlan() {
+    const { years, age } = getSettings();
+    for (let y = 0; y < years; y++) {
+      const a = age + y;
+      if (a < 10)      { childAmounts[y] = 50;   parentAmounts[y] = 600; }
+      else if (a < 13) { childAmounts[y] = 100;  parentAmounts[y] = 500; }
+      else if (a < 16) { childAmounts[y] = 200;  parentAmounts[y] = 400; }
+      else if (a < 18) { childAmounts[y] = 400;  parentAmounts[y] = 200; }
+      else if (a < 25) { childAmounts[y] = 800;  parentAmounts[y] = 0;   }
+      else             { childAmounts[y] = 2000; parentAmounts[y] = 0;   }
+    }
+    document.querySelectorAll('.child-input').forEach((el, i)  => { el.value = childAmounts[i]  || 0; });
+    document.querySelectorAll('.parent-input').forEach((el, i) => { el.value = parentAmounts[i] || 0; });
+    for (let y = 0; y < parseInt(document.getElementById('g-years').value); y++) refreshRowTotals(y);
+    compute();
+  }
+
+  // --- Main compute ---
+  function compute() {
+    const { start, age, rate, years } = getSettings();
+
+    let balance = start;
+    let totalChild = 0, totalParent = 0;
+    const step = Math.max(1, Math.floor(years / 20));
+
+    const chartLabels   = ['Age ' + age];
+    const chartBalances = [Math.round(balance)];
+    const chartChild    = [0];
+    const chartParent   = [0];
+
+    for (let y = 0; y < years; y++) {
+      const c = childAmounts[y]  || 0;
+      const p = parentAmounts[y] || 0;
+      balance = balance * (1 + rate) + c + p;
+      totalChild  += c;
+      totalParent += p;
+
+      const balEl = document.getElementById('bal-' + y);
+      if (balEl) balEl.textContent = fmtMoney(balance);
+
+      if ((y + 1) % step === 0 || y === years - 1) {
+        chartLabels.push('Age ' + (age + y + 1));
+        chartBalances.push(Math.round(balance));
+        chartChild.push(Math.round(totalChild));
+        chartParent.push(Math.round(totalParent));
+      }
+    }
+
+    const totalInvested = start + totalChild + totalParent;
+    const finalGrowth   = balance - totalInvested;
+
+    document.getElementById('stat-child').textContent  = fmtMoney(totalChild);
+    document.getElementById('stat-parent').textContent = fmtMoney(totalParent);
+    document.getElementById('stat-growth').textContent = fmtMoney(finalGrowth);
+    document.getElementById('stat-total').textContent  = fmtMoney(balance);
+
+    document.querySelectorAll('.milestone').forEach(m => {
+      m.classList.toggle('unlocked', balance >= parseFloat(m.dataset.target));
+    });
+
+    const mult = balance / (totalInvested || 1);
+    let wow = '';
+    if (balance >= 1000000) {
+      wow = `🌟 MILLIONAIRE! ${fmtMoney(totalInvested)} in → ${fmtMoney(balance)} out — that's ${mult.toFixed(1)}× your money! 🎉`;
+    } else if (balance >= 100000) {
+      wow = `👑 Incredible! ${fmtMoney(totalInvested)} became ${fmtMoney(balance)} — ${mult.toFixed(1)}× bigger! 🚀`;
+    } else if (balance >= 10000) {
+      wow = `🌲 Brilliant! ${fmtMoney(totalInvested)} grew into ${fmtMoney(balance)} — ${mult.toFixed(1)}× bigger! ✨`;
+    } else {
+      wow = `🌱 ${fmtMoney(totalInvested)} growing to ${fmtMoney(balance)}. Every year counts!`;
+    }
+    document.getElementById('wow-banner').textContent = wow;
+
+    updateChart(chartLabels, chartBalances, chartChild, chartParent);
+    updateBackLink();
+  }
+
+  function updateBackLink() {
+    const s = document.getElementById('g-start').value;
+    const a = document.getElementById('g-age').value;
+    const r = document.getElementById('g-rate').value;
+    const y = document.getElementById('g-years').value;
+    document.getElementById('back-link').href = `money-tree.html?start=${s}&age=${a}&rate=${r}&years=${y}`;
+  }
+
+  function updateChart(labels, balances, childTotals, parentTotals) {
+    const ctx = document.getElementById('growthChart').getContext('2d');
+    if (chart) {
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = balances;
+      chart.data.datasets[1].data = childTotals;
+      chart.data.datasets[2].data = parentTotals;
+      chart.update('active');
+      return;
+    }
+    chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Total value',
+            data: balances,
+            borderColor: '#06D6A0',
+            backgroundColor: 'rgba(6,214,160,0.12)',
+            fill: true, tension: 0.4,
+            pointRadius: 3, borderWidth: 3,
+            pointBackgroundColor: '#06D6A0',
+          },
+          {
+            label: childName() + "'s contributions",
+            data: childTotals,
+            borderColor: '#EF476F',
+            backgroundColor: 'rgba(239,71,111,0.08)',
+            fill: true, tension: 0.4,
+            pointRadius: 2, borderWidth: 2,
+            borderDash: [5,3],
+            pointBackgroundColor: '#EF476F',
+          },
+          {
+            label: parentName() + "'s contributions",
+            data: parentTotals,
+            borderColor: '#118AB2',
+            backgroundColor: 'rgba(17,138,178,0.08)',
+            fill: true, tension: 0.4,
+            pointRadius: 2, borderWidth: 2,
+            borderDash: [3,3],
+            pointBackgroundColor: '#118AB2',
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ' ' + ctx.dataset.label + ': ' + fmtMoney(ctx.raw)
+            }
+          }
+        },
+        scales: {
+          x: {
+            ticks: { font:{family:'Nunito',size:11}, color:'#8C7B6B', maxRotation:45 },
+            grid: { color:'rgba(0,0,0,0.05)' }
+          },
+          y: {
+            ticks: {
+              font: {family:'Nunito',size:11}, color:'#8C7B6B',
+              callback: v => v>=1000000 ? '£'+(v/1000000).toFixed(1)+'M' : v>=1000 ? '£'+Math.round(v/1000)+'k' : '£'+v
+            },
+            grid: { color:'rgba(0,0,0,0.05)' }
+          }
+        }
+      }
+    });
+  }
+
+  // --- Listeners ---
+  ['g-start','g-age','g-rate'].forEach(id => {
+    document.getElementById(id).addEventListener('input', compute);
+  });
+  document.getElementById('g-years').addEventListener('input', buildRows);
+  document.getElementById('name-child').addEventListener('input',  updateNames);
+  document.getElementById('name-parent').addEventListener('input', updateNames);
+
+  // --- Init ---
+  buildRows();
+  updateNames();
+</script>
+</body>
+</html>

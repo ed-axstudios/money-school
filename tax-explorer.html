@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tax Explorer | Money School</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;
+  --coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;
+  --blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;
+  --red:#EF233C;--orange:#FB8500;--text:#2D2A26;--muted:#8C7B6B;
+  --card:#FFFDF8;--border:#F0E8D8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 15%,var(--BG1),transparent 50%),radial-gradient(ellipse at 85% 80%,var(--BG2),transparent 50%);pointer-events:none;z-index:0;}
+.page{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:20px 20px 80px;}
+.back-link{display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:14px;text-decoration:none;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:7px 16px;margin-bottom:20px;transition:background .2s;}
+.back-link:hover{background:#F5F0FF;}
+/* header */
+.ch-header{text-align:center;margin-bottom:28px;}
+.ch-header .big{font-size:64px;display:block;animation:bounce 2.5s ease-in-out infinite;margin-bottom:8px;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.ch-header h1{font-family:'Fredoka One',cursive;font-size:38px;color:var(--ACCENT);line-height:1.1;}
+.ch-header h1 em{color:var(--coin);font-style:normal;-webkit-text-stroke:1.5px var(--coin-dark);}
+.ch-header p{font-size:16px;color:var(--muted);margin-top:7px;font-weight:600;}
+/* story card */
+.story-card{background:white;border:2px solid var(--border);border-radius:24px;padding:0;margin-bottom:22px;box-shadow:0 6px 24px rgba(0,0,0,.07);overflow:hidden;}
+.story-top{background:var(--STORY_BG);padding:20px 24px;display:flex;gap:16px;align-items:flex-start;}
+.story-avatar{font-size:48px;flex-shrink:0;}
+.story-bubble{background:white;border-radius:16px;padding:14px 18px;font-size:15px;line-height:1.6;font-weight:600;color:var(--text);box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.story-bubble strong{color:var(--ACCENT);}
+.story-steps{padding:20px 24px;}
+.step{display:flex;gap:14px;align-items:flex-start;margin-bottom:18px;}
+.step:last-child{margin-bottom:0;}
+.step-num{font-family:'Fredoka One',cursive;font-size:18px;color:white;background:var(--ACCENT);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-text{font-size:14px;line-height:1.6;font-weight:600;color:var(--text);}
+.step-text strong{color:var(--ACCENT);}
+/* section card */
+.card{background:var(--card);border:2px solid var(--border);border-radius:20px;padding:22px;margin-bottom:20px;box-shadow:0 4px 16px rgba(0,0,0,.05);}
+.card h2{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+/* XP banner */
+.xp-banner{background:linear-gradient(135deg,var(--ACCENT),var(--ACCENT2));border-radius:20px;padding:20px 24px;text-align:center;color:white;margin-bottom:20px;box-shadow:0 8px 28px rgba(0,0,0,.15);}
+.xp-banner h3{font-family:'Fredoka One',cursive;font-size:24px;margin-bottom:6px;}
+.xp-banner p{font-size:14px;opacity:.9;line-height:1.5;}
+/* buttons */
+.btn{padding:10px 20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;border-radius:12px;border:none;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:scale(1.04);}
+.btn:active{transform:scale(.97);}
+.btn-accent{background:var(--ACCENT);color:white;box-shadow:0 4px 14px rgba(0,0,0,.2);}
+.btn-ghost{background:white;color:var(--ACCENT);border:2px solid var(--ACCENT);}
+/* fact pills */
+.facts{display:flex;flex-direction:column;gap:10px;}
+.fact{display:flex;gap:12px;align-items:flex-start;background:white;border-radius:14px;padding:14px;border:1.5px solid var(--border);}
+.fact-icon{font-size:26px;flex-shrink:0;}
+.fact-body{font-size:14px;line-height:1.55;font-weight:600;color:var(--text);}
+.fact-body strong{color:var(--ACCENT);}
+
+:root{--ACCENT:#118AB2;--ACCENT2:#0D6E8A;--BG1:#E6F4FB;--BG2:#EDE9FE;--STORY_BG:#EFF6FF;}
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="index.html" class="back-link">&#8592; Back to Money School</a>
+  
+<div class="ch-header">
+  <span class="big">&#129534;</span>
+  <h1>Tax <em>Explorer</em></h1>
+  <p>Discover where the government's money comes from — and where it goes!</p>
+</div>
+
+<div class="story-card">
+  <div class="story-top">
+    <div class="story-avatar">&#129516;</div>
+    <div class="story-bubble">
+      Hello! I'm <strong>Rex the Tax Raptor</strong> &#129430;! Don't worry — I'm friendly, and tax is much less scary than I look!<br><br>
+      Here's a question: when your parents go to work and earn money, they don't get to keep <em>all</em> of it. Some of it goes to the government. But why?<br><br>
+      Because the government needs money to pay for things that <strong>everyone shares</strong> — schools, hospitals, roads, parks, the fire brigade, and much more. That money is called <strong>tax</strong>!
+    </div>
+  </div>
+  <div class="story-steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text"><strong>Income Tax:</strong> When adults earn money from their job, they pay a slice of it to the government. The more you earn, the bigger the slice — this is called a <strong>progressive</strong> tax, which means it's fairer for people who earn less.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text"><strong>VAT (Value Added Tax):</strong> When you buy most things in a shop — clothes, toys, electronics — 20% of the price goes to the government. It's already added in the price before you pay!</div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text"><strong>Where does it go?</strong> The government uses tax money to pay for the NHS, state schools, roads, police, the army, and benefits for people who need help. Everyone pays in, everyone benefits!</div>
+    </div>
+  </div>
+</div>
+
+<!-- Income tax calculator -->
+<div class="card">
+  <h2>&#128176; What Would You Pay? The Tax Calculator</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:16px;font-weight:600;">Drag the slider to set a salary and see how UK income tax works in real life.</p>
+
+  <div style="margin-bottom:18px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-weight:800;font-size:15px;">&#128188; Annual salary</span>
+      <span style="font-family:'Fredoka One',cursive;font-size:22px;color:var(--ACCENT);" id="sal-val">&#163;30,000</span>
+    </div>
+    <input type="range" id="sl-salary" min="0" max="150000" value="30000" step="1000" oninput="calcTax()" style="width:100%;accent-color:var(--ACCENT);">
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:700;margin-top:4px;">
+      <span>&#163;0</span><span>&#163;50k</span><span>&#163;100k</span><span>&#163;150k</span>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+    <div style="text-align:center;background:#FFF0F4;border:2px solid #FBCFE8;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:22px;">&#129534;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;color:var(--ACCENT);" id="tax-amt">&#163;4,286</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">TAX PAID</div>
+    </div>
+    <div style="text-align:center;background:#EFF6FF;border:2px solid #BFDBFE;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:22px;">&#128188;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;color:#118AB2;" id="ni-amt">&#163;1,860</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">NAT. INSURANCE</div>
+    </div>
+    <div style="text-align:center;background:#E8F8F3;border:2px solid #BBF7D0;border-radius:14px;padding:14px 8px;">
+      <div style="font-size:22px;">&#128178;</div>
+      <div style="font-family:'Fredoka One',cursive;font-size:18px;color:#06D6A0;" id="takehome-amt">&#163;23,854</div>
+      <div style="font-size:11px;color:var(--muted);font-weight:700;margin-top:2px;">TAKE-HOME</div>
+    </div>
+  </div>
+
+  <div id="tax-bar-wrap" style="background:#F0E8D8;border-radius:12px;height:22px;overflow:hidden;margin-bottom:10px;display:flex;">
+    <div id="bar-take" style="background:#06D6A0;height:100%;transition:width .5s;width:80%"></div>
+    <div id="bar-ni"   style="background:#118AB2;height:100%;transition:width .5s;width:6%"></div>
+    <div id="bar-tax"  style="background:var(--ACCENT);height:100%;transition:width .5s;width:14%"></div>
+  </div>
+  <div style="display:flex;gap:16px;font-size:12px;font-weight:700;">
+    <span style="color:#06D6A0;">&#9632; Take-home</span>
+    <span style="color:#118AB2;">&#9632; Nat. Insurance</span>
+    <span style="color:var(--ACCENT);">&#9632; Income Tax</span>
+  </div>
+
+  <div id="rex-says" style="margin-top:16px;background:#F5F0FF;border:2px solid #DDD6FE;border-radius:16px;padding:14px 18px;display:flex;gap:12px;align-items:center;">
+    <span style="font-size:32px;">&#129430;</span>
+    <p style="font-size:14px;font-weight:700;color:var(--purple);"></p>
+  </div>
+</div>
+
+<!-- Where does tax go? -->
+<div class="card">
+  <h2>&#127968; Where Does Your Tax Go?</h2>
+  <p style="font-size:14px;color:var(--muted);margin-bottom:14px;font-weight:600;">For every &#163;100 the government collects, here's roughly how it's spent:</p>
+  <div id="spend-bars"></div>
+</div>
+
+<!-- Quiz -->
+<div class="card">
+  <h2>&#129488; Quick Quiz!</h2>
+  <div id="tax-quiz"></div>
+</div>
+
+<div class="facts">
+  <div class="fact"><div class="fact-icon">&#127981;</div><div class="fact-body"><strong>The UK spends about &#163;190 billion a year on the NHS</strong> — almost entirely funded by taxes. Every time you pay tax as an adult, you're helping keep hospitals running!</div></div>
+  <div class="fact"><div class="fact-icon">&#129534;</div><div class="fact-body"><strong>Children don't pay income tax</strong> — you only start when you earn above &#163;12,570 a year (in 2025). But you do pay VAT whenever you buy something in a shop.</div></div>
+  <div class="fact"><div class="fact-icon">&#128218;</div><div class="fact-body"><strong>The first income tax</strong> was introduced in Britain in 1799 by Prime Minister William Pitt to pay for the war against Napoleon. It was meant to be temporary!</div></div>
+</div>
+
+<div class="xp-banner" style="margin-top:20px;">
+  <h3>&#11088; You earned 50 XP!</h3>
+  <p>You've completed Tax Explorer — you now understand income tax, VAT, and where the government spends your money!</p>
+</div>
+
+<script>
+// UK 2024/25 tax bands
+function calcTax(){
+  const sal=parseInt(document.getElementById('sl-salary').value)||0;
+  document.getElementById('sal-val').textContent='&#163;'+sal.toLocaleString('en-GB');
+  const pa=12570, basic=50270, higher=125140;
+  const basicRate=0.20, higherRate=0.40, addRate=0.45;
+  let tax=0;
+  if(sal>pa){
+    const taxable=sal-pa;
+    if(sal<=basic) tax=taxable*basicRate;
+    else if(sal<=higher) tax=(basic-pa)*basicRate+(sal-basic)*higherRate;
+    else tax=(basic-pa)*basicRate+(higher-basic)*higherRate+(sal-higher)*addRate;
+  }
+  // NI approx: 8% between 12570-50270, 2% above
+  let ni=0;
+  if(sal>12570){
+    ni=Math.min(sal,50270-12570)*0.08;
+    if(sal>50270) ni+=(sal-50270)*0.02;
+  }
+  const takehome=sal-tax-ni;
+  const fmt=n=>'&#163;'+Math.round(n).toLocaleString('en-GB');
+  document.getElementById('tax-amt').innerHTML=fmt(tax);
+  document.getElementById('ni-amt').innerHTML=fmt(ni);
+  document.getElementById('takehome-amt').innerHTML=fmt(takehome);
+  // bar
+  if(sal>0){
+    document.getElementById('bar-take').style.width=(takehome/sal*100)+'%';
+    document.getElementById('bar-ni').style.width=(ni/sal*100)+'%';
+    document.getElementById('bar-tax').style.width=(tax/sal*100)+'%';
+  }
+  const pct=sal>0?Math.round(tax/sal*100):0;
+  const msgs=[
+    [sal===0,'ROAR! Set a salary to see how tax works!'],
+    [sal<=12570,'At this salary you pay NO income tax at all — everyone gets a tax-free allowance of &#163;12,570!'],
+    [sal<=30000,'You\'re in the basic rate band — paying 20p in tax for every &#163;1 earned above &#163;12,570. That\'s '+pct+'% overall.'],
+    [sal<=50270,'Still basic rate! &#163;'+Math.round(tax).toLocaleString('en-GB')+' in tax sounds like a lot, but look how much you take home too.'],
+    [sal<=125140,'You\'ve crossed into the higher rate — earnings above &#163;50,270 are taxed at 40%. High earners pay more so lower earners pay less!'],
+    [true,'Top rate! Very high earners pay 45% on earnings above &#163;125,140. This is how the UK funds public services for everyone.']
+  ];
+  document.getElementById('rex-says').querySelector('p').innerHTML=msgs.find(m=>m[0])[1];
+}
+calcTax();
+
+// Spending breakdown
+const spending=[
+  {label:'&#127981; Health (NHS)',pct:39,col:'#EF476F'},
+  {label:'&#127881; Social Protection',pct:22,col:'#FFB703'},
+  {label:'&#127979; Education',pct:12,col:'#118AB2'},
+  {label:'&#128692; Transport',pct:6,col:'#06D6A0'},
+  {label:'&#128657; Debt Interest',pct:8,col:'#7B2D8B'},
+  {label:'&#127968; Other',pct:13,col:'#8C7B6B'},
+];
+const sb=document.getElementById('spend-bars');
+spending.forEach(s=>{
+  sb.innerHTML+=`<div style="margin-bottom:10px;">
+    <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px;">
+      <span>${s.label}</span><span style="color:${s.col};">${s.pct}p in every &#163;1</span>
+    </div>
+    <div style="background:#E8E0D4;border-radius:8px;height:14px;overflow:hidden;">
+      <div style="width:${s.pct}%;background:${s.col};height:100%;border-radius:8px;"></div>
+    </div>
+  </div>`;
+});
+
+// Quiz
+const taxQs=[
+  {q:'What is the name of the tax added to most things you buy in shops?',opts:['Income Tax','VAT','Council Tax','Stamp Duty'],ans:1},
+  {q:'What is the UK\'s tax-free personal allowance in 2025?',opts:['&#163;5,000','&#163;10,000','&#163;12,570','&#163;20,000'],ans:2},
+  {q:'Which of these is NOT funded by tax?',opts:['The NHS','State schools','Your pocket money','The fire brigade'],ans:2},
+  {q:'What does "progressive tax" mean?',opts:['Tax that goes up every year','Higher earners pay a bigger percentage','Children pay less','Tax on progress'],ans:1},
+];
+let tqScore=0,tqDone=0;
+const tqEl=document.getElementById('tax-quiz');
+taxQs.forEach((q,qi)=>{
+  const div=document.createElement('div');
+  div.style.cssText='margin-bottom:18px;';
+  div.innerHTML=`<p style="font-weight:800;font-size:14px;margin-bottom:8px;">${qi+1}. ${q.q}</p>`+
+    q.opts.map((o,oi)=>`<button onclick="answerTQ(this,${qi},${oi},${q.ans})" style="display:block;width:100%;text-align:left;padding:9px 14px;margin-bottom:5px;background:white;border:2px solid var(--border);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;" onmouseover="if(!this.disabled)this.style.borderColor='var(--ACCENT)'" onmouseout="if(!this.disabled)this.style.borderColor='var(--border)'">${o}</button>`).join('');
+  tqEl.appendChild(div);
+});
+const tqResultEl=document.createElement('div');
+tqResultEl.style.cssText='text-align:center;font-family:\'Fredoka One\',cursive;font-size:20px;margin-top:10px;display:none;';
+tqEl.appendChild(tqResultEl);
+function answerTQ(btn,qi,chosen,correct){
+  const group=btn.parentElement.querySelectorAll('button');
+  group.forEach((b,i)=>{b.disabled=true;if(i===correct)b.style.cssText+=';background:#E8F8F3;border-color:#06D6A0;';});
+  if(chosen===correct){btn.style.cssText+=';background:#E8F8F3;border-color:#06D6A0;';tqScore++;}
+  else{btn.style.cssText+=';background:#FFF0F4;border-color:#EF476F;';}
+  tqDone++;
+  if(tqDone===taxQs.length){tqResultEl.style.display='block';tqResultEl.textContent=tqScore+'/'+taxQs.length+' correct! '+(tqScore===taxQs.length?'&#127881; Tax genius!':'&#128218; Keep learning!');}
+}
+</script>
+
+</div>
+</body>
+</html>
