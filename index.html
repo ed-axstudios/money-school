@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Money School</title>
+<title>Money School &#127979;</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--sky:#FFF9F0;--leaf:#06D6A0;--leaf-dark:#05A67D;--coin:#FFB703;--coin-dark:#e6a202;--pink:#EF476F;--blue:#118AB2;--purple:#7B2D8B;--purple-light:#F5F0FF;--red:#EF233C;--orange:#FB8500;--teal:#0CB0A9;--text:#2D2A26;--muted:#8C7B6B;--card:#FFFDF8;--border:#F0E8D8;}
@@ -12,8 +12,9 @@ body{font-family:'Nunito',sans-serif;background:var(--sky);color:var(--text);min
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 20%,#FFF3C4,transparent 45%),radial-gradient(ellipse at 85% 75%,#D4F5EC,transparent 45%),radial-gradient(ellipse at 50% 90%,#EDE9FE,transparent 40%);pointer-events:none;z-index:0;}
 .screen{display:none;position:relative;z-index:1;min-height:100vh;}
 .screen.active{display:block;}
-#sw.active,#se.active{display:flex;flex-direction:column;align-items:center;}
+#sw.active,#se.active,#sr.active{display:flex;flex-direction:column;align-items:center;}
 #sw{justify-content:center;padding:40px 20px 60px;}
+#sr{justify-content:center;padding:40px 20px 60px;}
 .hero{text-align:center;margin-bottom:32px;animation:fadeUp .6s ease both;}
 .hero .big{font-size:72px;display:block;animation:bounce 2.5s ease-in-out infinite;}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
@@ -29,32 +30,41 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .av-btn.sel{border-color:var(--purple);background:var(--purple-light);transform:scale(1.2);box-shadow:0 4px 16px rgba(123,45,139,.25);}
 .fg{margin-bottom:16px;}
 .fg label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin-bottom:5px;}
-.fg input{width:100%;padding:11px 15px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;border-radius:13px;border:2px solid var(--border);outline:none;background:var(--sky);color:var(--text);transition:border-color .2s,box-shadow .2s;}
-.fg input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(123,45,139,.1);}
+.fg input{width:100%;padding:11px 15px;font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;border-radius:13px;border:2px solid var(--border);outline:none;background:var(--sky);color:var(--text);transition:border-color .2s;}
+.fg input:focus{border-color:var(--purple);}
 .fg input.cf{color:var(--pink);background:#FFF0F4;border-color:#FBCFE8;}
-.fg input.cf:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(239,71,111,.12);}
 .fg input.pf{color:var(--blue);background:#EFF6FF;border-color:#BFDBFE;}
-.fg input.pf:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(17,138,178,.12);}
 .fg input.af{color:var(--leaf-dark);background:#E8F8F3;border-color:var(--leaf);}
-.fg input.af:focus{border-color:var(--leaf);box-shadow:0 0 0 3px rgba(6,214,160,.12);}
 .fhint{font-size:12px;color:var(--muted);margin-top:3px;font-style:italic;}
-.pbtn{width:100%;padding:15px;font-family:'Fredoka One',cursive;font-size:22px;color:white;background:linear-gradient(135deg,var(--purple),#4A1D96);border:none;border-radius:16px;cursor:pointer;margin-top:6px;box-shadow:0 8px 28px rgba(123,45,139,.35);transition:transform .2s,box-shadow .2s;}
-.pbtn:hover{transform:scale(1.02);box-shadow:0 12px 36px rgba(123,45,139,.45);}
+.pbtn{width:100%;padding:15px;font-family:'Fredoka One',cursive;font-size:22px;color:white;background:linear-gradient(135deg,var(--purple),#4A1D96);border:none;border-radius:16px;cursor:pointer;margin-top:6px;box-shadow:0 8px 28px rgba(123,45,139,.35);transition:transform .2s;}
+.pbtn:hover{transform:scale(1.02);}
 .pbtn:active{transform:scale(.98);}
 .pbtn.green{background:linear-gradient(135deg,var(--leaf-dark),#038C6E);}
+.pbtn.blue{background:linear-gradient(135deg,var(--blue),#0A6A8A);}
 .errmsg{color:var(--red);font-size:13px;font-weight:700;text-align:center;margin-top:10px;display:none;}
 .errmsg.show{display:block;}
-/* HOME */
-#sh{padding-bottom:80px;}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:13px;font-weight:700;}
+.divider::before,.divider::after{content:'';flex:1;height:2px;background:var(--border);}
+/* save code box */
+.code-box{background:var(--purple-light);border:3px solid #DDD6FE;border-radius:20px;padding:20px;text-align:center;margin:16px 0;}
+.code-box .code-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--purple);margin-bottom:8px;}
+.code-display{font-family:'Fredoka One',cursive;font-size:38px;color:var(--purple);letter-spacing:6px;}
+.code-sub{font-size:12px;color:var(--muted);margin-top:6px;font-weight:600;}
+/* restore screen */
+.restore-input{width:100%;padding:14px 15px;font-family:'Fredoka One',cursive;font-size:28px;text-align:center;letter-spacing:6px;border-radius:13px;border:2px solid var(--border);outline:none;background:var(--sky);color:var(--purple);}
+.restore-input:focus{border-color:var(--purple);}
+/* topbar */
 .topbar{background:white;border-bottom:2px solid var(--border);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.06);}
 .tbl{display:flex;align-items:center;gap:12px;}
 .tb-av{font-size:30px;width:44px;height:44px;background:var(--purple-light);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #DDD6FE;}
 .tb-name{font-family:'Fredoka One',cursive;font-size:19px;color:var(--purple);}
 .tb-age{font-size:12px;color:var(--muted);font-weight:700;}
 .tbr{display:flex;align-items:center;gap:8px;}
-.xp{background:linear-gradient(135deg,var(--coin),#FF8C42);color:white;font-family:'Fredoka One',cursive;font-size:14px;padding:5px 13px;border-radius:20px;box-shadow:0 4px 12px rgba(255,183,3,.3);}
+.xp{background:linear-gradient(135deg,var(--coin),#FF8C42);color:white;font-family:'Fredoka One',cursive;font-size:14px;padding:5px 13px;border-radius:20px;}
 .editbtn{background:var(--purple-light);border:2px solid #DDD6FE;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--purple);cursor:pointer;transition:background .2s;}
 .editbtn:hover{background:#EDE9FE;}
+/* home */
+#sh{padding-bottom:80px;}
 .home-hero{padding:28px 24px 16px;text-align:center;max-width:680px;margin:0 auto;}
 .home-hero h2{font-family:'Fredoka One',cursive;font-size:32px;line-height:1.2;}
 .home-hero h2 span{color:var(--pink);}
@@ -105,15 +115,22 @@ hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16p
 .sync-note{max-width:680px;margin:12px auto 0;padding:0 24px;}
 .sync-inner{background:#F5F0FF;border:2px solid #DDD6FE;border-radius:16px;padding:13px 16px;font-size:13px;color:var(--purple);font-weight:600;display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
 .sync-inner span{font-size:20px;flex-shrink:0;margin-top:1px;}
-/* EDIT */
+/* edit */
 #se{padding:40px 20px 60px;}
 .back-btn{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;color:var(--purple);font-weight:700;font-size:15px;background:white;border:2px solid #DDD6FE;border-radius:12px;padding:8px 16px;cursor:pointer;margin-bottom:22px;transition:background .2s;}
 .back-btn:hover{background:#F5F0FF;}
 .danger-btn{width:100%;margin-top:12px;padding:12px;background:none;border:2px solid #FBCFE8;border-radius:14px;color:var(--pink);font-family:'Nunito',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s;}
 .danger-btn:hover{background:#FFF0F4;}
+/* spinner */
+.spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.saving-indicator{position:fixed;bottom:20px;right:20px;background:var(--purple);color:white;font-family:'Fredoka One',cursive;font-size:14px;padding:10px 18px;border-radius:20px;box-shadow:0 4px 16px rgba(123,45,139,.4);opacity:0;transition:opacity .3s;z-index:999;pointer-events:none;}
+.saving-indicator.show{opacity:1;}
 </style>
 </head>
 <body>
+
+<div class="saving-indicator" id="saving-indicator">&#128190; Saving...</div>
 
 <!-- WELCOME -->
 <div id="sw" class="screen active">
@@ -136,22 +153,32 @@ hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16p
       <button class="av-btn" data-av="&#128044;" onclick="pickAv(this,'sw')">&#128044;</button>
       <button class="av-btn" data-av="&#129430;" onclick="pickAv(this,'sw')">&#129430;</button>
     </div>
-    <div class="fg">
-      <label>Your first name</label>
-      <input type="text" id="s-cn" class="cf" placeholder="e.g. Amelie" maxlength="20" autocomplete="off">
-      <p class="fhint">Just your first name &#8212; nothing identifying needed!</p>
-    </div>
-    <div class="fg">
-      <label>Your age</label>
-      <input type="number" id="s-ca" class="af" placeholder="e.g. 8" min="4" max="18">
-    </div>
-    <div class="fg">
-      <label>Parent or guardian&#39;s name</label>
-      <input type="text" id="s-pn" class="pf" placeholder="e.g. Daddy" maxlength="20" autocomplete="off">
-      <p class="fhint">So we know who&#39;s helping you learn!</p>
-    </div>
-    <button class="pbtn" onclick="saveSetup()">&#128640; Start Money School!</button>
+    <div class="fg"><label>Your first name</label><input type="text" id="s-cn" class="cf" placeholder="e.g. Amelie" maxlength="20" autocomplete="off"><p class="fhint">Just your first name &#8212; nothing identifying needed!</p></div>
+    <div class="fg"><label>Your age</label><input type="number" id="s-ca" class="af" placeholder="e.g. 8" min="4" max="18"></div>
+    <div class="fg"><label>Parent or guardian&#39;s name</label><input type="text" id="s-pn" class="pf" placeholder="e.g. Daddy" maxlength="20" autocomplete="off"><p class="fhint">So we know who&#39;s helping you learn!</p></div>
+    <button class="pbtn" id="setup-btn" onclick="saveSetup()">&#128640; Start Money School!</button>
     <p class="errmsg" id="sw-err">Please enter your name and age to continue!</p>
+    <div class="divider">already have a save code?</div>
+    <button class="pbtn blue" onclick="show('sr')">&#128273; Restore my progress</button>
+  </div>
+</div>
+
+<!-- RESTORE -->
+<div id="sr" class="screen">
+  <div class="hero" style="margin-bottom:20px;">
+    <span class="big" style="font-size:52px;">&#128273;</span>
+    <h1 style="font-size:36px;">Restore <em>Progress</em></h1>
+    <p>Enter your 6-digit save code to pick up where you left off!</p>
+  </div>
+  <div class="pcard">
+    <h2>&#128272; Enter your save code</h2>
+    <div class="fg">
+      <input type="number" class="restore-input" id="restore-code" placeholder="482913" maxlength="6" autocomplete="off">
+    </div>
+    <button class="pbtn" id="restore-btn" onclick="restoreProfile()">&#9889; Restore my progress!</button>
+    <p class="errmsg" id="sr-err">Code not found &#8212; check the numbers and try again!</p>
+    <div class="divider">no code yet?</div>
+    <button class="pbtn blue" onclick="show('sw')">&#127775; Create a new profile</button>
   </div>
 </div>
 
@@ -160,10 +187,7 @@ hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16p
   <div class="topbar">
     <div class="tbl">
       <div class="tb-av" id="tb-av">&#129409;</div>
-      <div>
-        <div class="tb-name" id="tb-name">Amelie</div>
-        <div class="tb-age" id="tb-age">Age 8</div>
-      </div>
+      <div><div class="tb-name" id="tb-name">Amelie</div><div class="tb-age" id="tb-age">Age 8</div></div>
     </div>
     <div class="tbr">
       <div class="xp" id="tb-xp">&#11088; 0 XP</div>
@@ -183,93 +207,30 @@ hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16p
 
   <hr class="dv" style="margin-top:18px;">
 
-  <div class="sync-note">
+  <div class="sync-note" style="margin-top:16px;">
     <div class="sync-inner">
-      <span>&#128161;</span>
-      <div>Your progress is saved on <strong>this device</strong> automatically. To use on another device, you can transfer your save data &#8212; we&#39;ll add this feature soon!</div>
+      <span>&#128273;</span>
+      <div>Your save code is <strong id="sync-code">------</strong> &#8212; write it down or screenshot it to restore your progress on any device!</div>
     </div>
   </div>
 
   <p class="sec-title">&#128218; Your Money School Chapters</p>
 
   <div class="grid">
-
-    <a class="cc" data-c="green" id="ch1" href="#" onclick="goChapter(event,1,'money-tree.html',50)">
-      <span class="cc-emoji">&#127795;</span>
-      <div class="cc-num">Chapter 1</div>
-      <div class="cc-title">The Money Tree</div>
-      <div class="cc-desc">Plant tiny seeds of money and watch them grow into a fortune! Learn the magic of compound interest.</div>
-      <div class="cc-foot">
-        <span class="cc-stat sr" id="ch1-stat">&#9654; Play now</span>
-        <span class="cc-xp">+50 XP</span>
-      </div>
-    </a>
-
-    <a class="cc" data-c="coin" id="ch2" href="#" onclick="goChapter(event,2,'budget-boss.html',50)">
-      <span class="cc-emoji">&#128202;</span>
-      <div class="cc-num">Chapter 2</div>
-      <div class="cc-title">Budget Boss</div>
-      <div class="cc-desc">Learn to be the boss of your money &#8212; needs vs wants, spending plans, and making every penny count.</div>
-      <div class="cc-foot"><span class="cc-stat sr" id="ch2-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
-    </a>
-
-    <a class="cc" data-c="blue" id="ch3" href="#" onclick="goChapter(event,3,'tax-explorer.html',50)">
-      <span class="cc-emoji">&#129534;</span>
-      <div class="cc-num">Chapter 3</div>
-      <div class="cc-title">Tax Explorer</div>
-      <div class="cc-desc">Where does the government&#39;s money come from? Discover how taxes work and why everyone pays them.</div>
-      <div class="cc-foot"><span class="cc-stat sr" id="ch3-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
-    </a>
-
-    <a class="cc" data-c="red" id="ch4" href="#" onclick="goChapter(event,4,'scam-buster.html',50)">
-      <span class="cc-emoji">&#128737;&#65039;</span>
-      <div class="cc-num">Chapter 4</div>
-      <div class="cc-title">Scam Buster</div>
-      <div class="cc-desc">Spot the tricks! Learn how to protect yourself from scams, fake deals, and online fraudsters.</div>
-      <div class="cc-foot"><span class="cc-stat sr" id="ch4-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
-    </a>
-
-    <a class="cc" data-c="orange" id="ch5" href="#" onclick="goChapter(event,5,'debt-detective.html',50)">
-      <span class="cc-emoji">&#128179;</span>
-      <div class="cc-num">Chapter 5</div>
-      <div class="cc-title">Debt Detective</div>
-      <div class="cc-desc">Not all borrowing is bad! Find out the difference between helpful debt and dangerous debt.</div>
-      <div class="cc-foot"><span class="cc-stat sr" id="ch5-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div>
-    </a>
-
-    <div class="cc locked" data-c="purple">
-      <span class="cc-emoji">&#128200;</span>
-      <div class="cc-num">Chapter 6</div>
-      <div class="cc-title">Stock Market Adventure</div>
-      <div class="cc-desc">What is a share? How do companies grow? Become a junior investor and explore the stock market.</div>
-      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div>
-    </div>
-
-    <div class="cc locked" data-c="teal">
-      <span class="cc-emoji">&#127969;</span>
-      <div class="cc-num">Chapter 7</div>
-      <div class="cc-title">Home Buyer</div>
-      <div class="cc-desc">How do people buy a house? Learn about mortgages, deposits, and the path to owning your own home.</div>
-      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div>
-    </div>
-
-    <div class="cc locked" data-c="pink">
-      <span class="cc-emoji">&#127749;&#65039;</span>
-      <div class="cc-num">Chapter 8</div>
-      <div class="cc-title">Future You</div>
-      <div class="cc-desc">Plan for the day you stop working! Discover pensions, retirement savings, and why starting early is everything.</div>
-      <div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+100 XP</span></div>
-    </div>
-
+    <a class="cc" data-c="green" id="ch1" href="#" onclick="goChapter(event,1,'money-tree.html',50)"><span class="cc-emoji">&#127795;</span><div class="cc-num">Chapter 1</div><div class="cc-title">The Money Tree</div><div class="cc-desc">Plant tiny seeds of money and watch them grow into a fortune! Learn the magic of compound interest.</div><div class="cc-foot"><span class="cc-stat sr" id="ch1-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div></a>
+    <a class="cc" data-c="coin" id="ch2" href="#" onclick="goChapter(event,2,'budget-boss.html',50)"><span class="cc-emoji">&#128202;</span><div class="cc-num">Chapter 2</div><div class="cc-title">Budget Boss</div><div class="cc-desc">Learn to be the boss of your money &#8212; needs vs wants, spending plans, and making every penny count.</div><div class="cc-foot"><span class="cc-stat sr" id="ch2-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div></a>
+    <a class="cc" data-c="blue" id="ch3" href="#" onclick="goChapter(event,3,'tax-explorer.html',50)"><span class="cc-emoji">&#129534;</span><div class="cc-num">Chapter 3</div><div class="cc-title">Tax Explorer</div><div class="cc-desc">Where does the government&#39;s money come from? Discover how taxes work and why everyone pays them.</div><div class="cc-foot"><span class="cc-stat sr" id="ch3-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div></a>
+    <a class="cc" data-c="red" id="ch4" href="#" onclick="goChapter(event,4,'scam-buster.html',50)"><span class="cc-emoji">&#128737;&#65039;</span><div class="cc-num">Chapter 4</div><div class="cc-title">Scam Buster</div><div class="cc-desc">Spot the tricks! Learn how to protect yourself from scams, fake deals, and online fraudsters.</div><div class="cc-foot"><span class="cc-stat sr" id="ch4-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div></a>
+    <a class="cc" data-c="orange" id="ch5" href="#" onclick="goChapter(event,5,'debt-detective.html',50)"><span class="cc-emoji">&#128179;</span><div class="cc-num">Chapter 5</div><div class="cc-title">Debt Detective</div><div class="cc-desc">Not all borrowing is bad! Find out the difference between helpful debt and dangerous debt.</div><div class="cc-foot"><span class="cc-stat sr" id="ch5-stat">&#9654; Play now</span><span class="cc-xp">+50 XP</span></div></a>
+    <div class="cc locked" data-c="purple"><span class="cc-emoji">&#128200;</span><div class="cc-num">Chapter 6</div><div class="cc-title">Stock Market Adventure</div><div class="cc-desc">What is a share? How do companies grow? Become a junior investor and explore the stock market.</div><div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div></div>
+    <div class="cc locked" data-c="teal"><span class="cc-emoji">&#127969;</span><div class="cc-num">Chapter 7</div><div class="cc-title">Home Buyer</div><div class="cc-desc">How do people buy a house? Learn about mortgages, deposits, and the path to owning your own home.</div><div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+75 XP</span></div></div>
+    <div class="cc locked" data-c="pink"><span class="cc-emoji">&#127749;&#65039;</span><div class="cc-num">Chapter 8</div><div class="cc-title">Future You</div><div class="cc-desc">Plan for the day you stop working! Discover pensions and why starting early is everything.</div><div class="cc-foot"><span class="cc-stat sl">&#128274; Coming soon</span><span class="cc-xp">+100 XP</span></div></div>
   </div>
 
   <div class="buff-wrap">
     <div class="buff-inner">
       <span class="buff-emoji">&#127913;</span>
-      <div class="buff-text">
-        <strong>Warren Buffett&#39;s Tip of the Day</strong>
-        <p id="buff-tip">"Someone is sitting in the shade today because someone planted a tree a long time ago."</p>
-      </div>
+      <div class="buff-text"><strong>Warren Buffett&#39;s Tip of the Day</strong><p id="buff-tip">"Someone is sitting in the shade today because someone planted a tree a long time ago."</p></div>
     </div>
   </div>
 </div>
@@ -294,14 +255,23 @@ hr.dv{height:2px;background:var(--border);border:none;max-width:680px;margin:16p
     <div class="fg"><label>Your first name</label><input type="text" id="e-cn" class="cf" maxlength="20" autocomplete="off"></div>
     <div class="fg"><label>Your age</label><input type="number" id="e-ca" class="af" min="4" max="18"></div>
     <div class="fg"><label>Parent or guardian&#39;s name</label><input type="text" id="e-pn" class="pf" maxlength="20" autocomplete="off"></div>
+
+    <div class="code-box">
+      <div class="code-label">&#128273; Your save code</div>
+      <div class="code-display" id="edit-code">------</div>
+      <div class="code-sub">Keep this safe &#8212; use it to restore on any device!</div>
+    </div>
+
     <button class="pbtn green" onclick="saveEdit()">&#128190; Save changes</button>
-    <button class="danger-btn" onclick="resetAll()">&#128465;&#65039; Start fresh (clears all saved data)</button>
+    <button class="danger-btn" onclick="resetAll()">&#128465;&#65039; Start fresh (clears all data)</button>
   </div>
 </div>
 
 <script>
-const KEY='moneyschool_v1';
-const TIPS=[
+const SUPA_URL = 'https://vuezqsvczxiiisngspvg.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1ZXpxc3ZjenhpaWlzbmdzcHZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNjIzMzEsImV4cCI6MjA5NDgzODMzMX0.oPm3Tndpz01ngcr9btMny0yyAik3GLcLcXPrKf51V_Y';
+const LOCAL_KEY = 'moneyschool_v2';
+const TIPS = [
   '"Someone is sitting in the shade today because someone planted a tree a long time ago."',
   '"Do not save what is left after spending; spend what is left after saving."',
   '"The earlier you start investing, the more time your money has to grow."',
@@ -310,97 +280,300 @@ const TIPS=[
   '"The best investment you can make is in yourself."',
   '"It is not necessary to do extraordinary things to get extraordinary results."'
 ];
-let P={childName:'',childAge:'',parentName:'',avatar:'\u{1F981}',xp:0,visited:[],joined:null};
-let sAv='\u{1F981}',eAv='\u{1F981}';
 
-function init(){
-  try{
-    const s=localStorage.getItem(KEY);
-    if(s){P={...P,...JSON.parse(s)};goHome();}
-    else show('sw');
-  }catch(e){show('sw');}
+let P = {childName:'',childAge:'',parentName:'',avatar:'&#129409;',xp:0,visited:[],saveCode:'',joined:null};
+let sAv = '&#129409;', eAv = '&#129409;';
+
+// ── SUPABASE HELPERS ──────────────────────────────────────────
+async function sbFetch(path, method='GET', body=null) {
+  const opts = {
+    method,
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': 'Bearer ' + SUPA_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': method==='POST' ? 'return=representation' : ''
+    }
+  };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch(SUPA_URL + '/rest/v1/' + path, opts);
+  if (!res.ok) throw new Error('Supabase error: ' + res.status);
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
 }
 
-function show(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+async function createProfile(profile) {
+  const row = {
+    save_code: profile.saveCode,
+    child_name: profile.childName,
+    child_age: parseInt(profile.childAge),
+    parent_name: profile.parentName,
+    avatar: profile.avatar,
+    xp: profile.xp,
+    visited: profile.visited
+  };
+  return await sbFetch('money_school_profiles', 'POST', row);
+}
+
+async function updateProfile(profile) {
+  const row = {
+    child_name: profile.childName,
+    child_age: parseInt(profile.childAge),
+    parent_name: profile.parentName,
+    avatar: profile.avatar,
+    xp: profile.xp,
+    visited: profile.visited,
+    updated_at: new Date().toISOString()
+  };
+  return await sbFetch(
+    'money_school_profiles?save_code=eq.' + profile.saveCode,
+    'PATCH', row
+  );
+}
+
+async function fetchByCode(code) {
+  const data = await sbFetch('money_school_profiles?save_code=eq.' + code + '&select=*');
+  return data && data.length > 0 ? data[0] : null;
+}
+
+function generateCode() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+// ── SAVE INDICATOR ────────────────────────────────────────────
+function showSaving(msg='&#128190; Saving...') {
+  const el = document.getElementById('saving-indicator');
+  el.innerHTML = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// ── LOCAL + REMOTE PERSIST ────────────────────────────────────
+function persistLocal() {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(P));
+}
+
+async function persistRemote() {
+  try {
+    showSaving('&#128190; Saving...');
+    await updateProfile(P);
+    showSaving('&#10003; Saved!');
+  } catch(e) {
+    console.warn('Remote save failed, local still saved', e);
+  }
+}
+
+async function persist() {
+  persistLocal();
+  await persistRemote();
+}
+
+// ── SCREENS ───────────────────────────────────────────────────
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   window.scrollTo(0,0);
 }
-function goHome(){show('sh');renderHome();}
-function goEdit(){
+
+function goHome() { show('sh'); renderHome(); }
+function goEdit() {
   show('se');
-  document.getElementById('e-cn').value=P.childName;
-  document.getElementById('e-ca').value=P.childAge;
-  document.getElementById('e-pn').value=P.parentName;
-  eAv=P.avatar;
-  document.querySelectorAll('#av-se .av-btn').forEach(b=>b.classList.toggle('sel',b.dataset.av===eAv));
+  document.getElementById('e-cn').value = P.childName;
+  document.getElementById('e-ca').value = P.childAge;
+  document.getElementById('e-pn').value = P.parentName;
+  document.getElementById('edit-code').textContent = P.saveCode || '------';
+  eAv = P.avatar;
+  document.querySelectorAll('#av-se .av-btn').forEach(b =>
+    b.classList.toggle('sel', b.dataset.av === eAv));
 }
 
-function pickAv(btn,ctx){
-  const rid='av-'+ctx;
-  document.querySelectorAll('#'+rid+' .av-btn').forEach(b=>b.classList.remove('sel'));
+function pickAv(btn, ctx) {
+  const rid = 'av-' + ctx;
+  document.querySelectorAll('#' + rid + ' .av-btn').forEach(b => b.classList.remove('sel'));
   btn.classList.add('sel');
-  if(ctx==='sw')sAv=btn.dataset.av; else eAv=btn.dataset.av;
+  if (ctx === 'sw') sAv = btn.dataset.av;
+  else eAv = btn.dataset.av;
 }
 
-function saveSetup(){
-  const name=document.getElementById('s-cn').value.trim();
-  const age=document.getElementById('s-ca').value.trim();
-  const par=document.getElementById('s-pn').value.trim();
-  if(!name||!age){document.getElementById('sw-err').classList.add('show');return;}
+// ── SETUP ─────────────────────────────────────────────────────
+async function saveSetup() {
+  const name = document.getElementById('s-cn').value.trim();
+  const age  = document.getElementById('s-ca').value.trim();
+  const par  = document.getElementById('s-pn').value.trim();
+  if (!name || !age) { document.getElementById('sw-err').classList.add('show'); return; }
   document.getElementById('sw-err').classList.remove('show');
-  P={childName:name,childAge:age,parentName:par||'Parent',avatar:sAv,xp:0,visited:[],joined:new Date().toISOString()};
-  persist();goHome();
+
+  const btn = document.getElementById('setup-btn');
+  btn.innerHTML = '<span class="spinner"></span> Creating profile...';
+  btn.disabled = true;
+
+  const code = generateCode();
+  P = { childName:name, childAge:age, parentName:par||'Parent',
+         avatar:sAv, xp:0, visited:[], saveCode:code,
+         joined:new Date().toISOString() };
+
+  try {
+    await createProfile(P);
+    persistLocal();
+    showSaving('&#10003; Profile created!');
+  } catch(e) {
+    console.warn('Remote create failed, using local', e);
+  }
+
+  // Show save code before going home
+  showCodeModal(code, () => goHome());
 }
 
-function saveEdit(){
-  const name=document.getElementById('e-cn').value.trim();
-  const age=document.getElementById('e-ca').value.trim();
-  const par=document.getElementById('e-pn').value.trim();
-  if(!name||!age)return;
-  P.childName=name;P.childAge=age;P.parentName=par||'Parent';P.avatar=eAv;
-  persist();goHome();
+function showCodeModal(code, onContinue) {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;';
+  overlay.innerHTML = `
+    <div style="background:white;border-radius:28px;padding:36px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+      <div style="font-size:48px;margin-bottom:12px;">&#128273;</div>
+      <h2 style="font-family:'Fredoka One',cursive;font-size:26px;color:var(--purple);margin-bottom:8px;">Your Save Code</h2>
+      <p style="font-size:14px;color:var(--muted);font-weight:600;margin-bottom:20px;">Write this down or take a screenshot &#8212; you&#39;ll need it to restore your progress on another device!</p>
+      <div style="background:var(--purple-light);border:3px solid #DDD6FE;border-radius:20px;padding:20px;margin-bottom:24px;">
+        <div style="font-family:'Fredoka One',cursive;font-size:52px;color:var(--purple);letter-spacing:8px;">${code}</div>
+      </div>
+      <button onclick="this.closest('div[style]').remove();(arguments[0]||function(){})();" 
+        style="width:100%;padding:14px;font-family:'Fredoka One',cursive;font-size:20px;color:white;background:linear-gradient(135deg,var(--purple),#4A1D96);border:none;border-radius:14px;cursor:pointer;"
+        data-cb="1">
+        &#127881; Got it &#8212; Let&#39;s go!
+      </button>
+    </div>`;
+  // wire the callback
+  overlay.querySelector('[data-cb]').onclick = () => { overlay.remove(); onContinue(); };
+  document.body.appendChild(overlay);
 }
 
-function resetAll(){
-  if(!confirm('This will clear everything and start fresh. Are you sure?'))return;
-  localStorage.removeItem(KEY);
-  P={childName:'',childAge:'',parentName:'',avatar:'\u{1F981}',xp:0,visited:[],joined:null};
+// ── RESTORE ───────────────────────────────────────────────────
+async function restoreProfile() {
+  const code = document.getElementById('restore-code').value.trim();
+  if (code.length < 6) { document.getElementById('sr-err').classList.add('show'); return; }
+  document.getElementById('sr-err').classList.remove('show');
+
+  const btn = document.getElementById('restore-btn');
+  btn.innerHTML = '<span class="spinner"></span> Looking up your code...';
+  btn.disabled = true;
+
+  try {
+    const row = await fetchByCode(code);
+    if (!row) throw new Error('not found');
+    P = {
+      childName:  row.child_name,
+      childAge:   row.child_age,
+      parentName: row.parent_name,
+      avatar:     row.avatar,
+      xp:         row.xp,
+      visited:    row.visited || [],
+      saveCode:   row.save_code,
+      joined:     row.created_at
+    };
+    persistLocal();
+    goHome();
+  } catch(e) {
+    document.getElementById('sr-err').classList.add('show');
+  } finally {
+    btn.innerHTML = '&#9889; Restore my progress!';
+    btn.disabled = false;
+  }
+}
+
+// ── EDIT SAVE ─────────────────────────────────────────────────
+async function saveEdit() {
+  const name = document.getElementById('e-cn').value.trim();
+  const age  = document.getElementById('e-ca').value.trim();
+  const par  = document.getElementById('e-pn').value.trim();
+  if (!name || !age) return;
+  P.childName = name; P.childAge = age;
+  P.parentName = par || 'Parent'; P.avatar = eAv;
+  await persist();
+  goHome();
+}
+
+// ── RESET ─────────────────────────────────────────────────────
+function resetAll() {
+  if (!confirm('This will clear everything on this device. Your save code will still work to restore from Supabase. Continue?')) return;
+  localStorage.removeItem(LOCAL_KEY);
+  P = {childName:'',childAge:'',parentName:'',avatar:'&#129409;',xp:0,visited:[],saveCode:'',joined:null};
   show('sw');
 }
 
-function persist(){localStorage.setItem(KEY,JSON.stringify(P));}
-
-function goChapter(e,num,file,xpVal){
+// ── CHAPTER NAV ───────────────────────────────────────────────
+async function goChapter(e, num, file, xpVal) {
   e.preventDefault();
-  if(!P.visited.includes(num)){P.visited.push(num);P.xp+=xpVal;persist();}
-  const q=new URLSearchParams({childName:P.childName,age:P.childAge,parentName:P.parentName,start:'50',rate:'5',years:'30'});
-  window.location.href=file+'?'+q.toString();
+  if (!P.visited.includes(num)) {
+    P.visited.push(num);
+    P.xp += xpVal;
+    await persist();
+  }
+  const q = new URLSearchParams({
+    childName:  P.childName,
+    age:        P.childAge,
+    parentName: P.parentName,
+    start: '50', rate: '5', years: '30'
+  });
+  window.location.href = file + '?' + q.toString();
 }
 
-function renderHome(){
-  const {childName,childAge,parentName,avatar,xp,visited}=P;
-  document.getElementById('tb-av').textContent=avatar;
-  document.getElementById('tb-name').textContent=childName;
-  document.getElementById('tb-age').textContent='Age '+childAge;
-  document.getElementById('tb-xp').textContent='\u2B50 '+xp+' XP';
-  document.getElementById('h-name').textContent=childName;
-  const subs=['Pick a chapter below and start learning about money!',
-    parentName+' is cheering you on \u2014 what\'s next? \uD83C\uDF89',
-    'You\'re on a roll! Keep going, money master! \uD83D\uDE80'];
-  document.getElementById('h-sub').textContent=visited.length===0?subs[0]:visited.length===1?subs[1]:subs[2];
-  const done=visited.length,total=8;
-  document.getElementById('prog-txt').textContent=done+' of '+total+' chapters visited';
-  document.getElementById('prog-bar').style.width=Math.round(done/total*100)+'%';
-  [1,2,3,4,5].forEach(n=>{
-    if(visited.includes(n)){
-      const s=document.getElementById('ch'+n+'-stat');
-      if(s){s.textContent='\u2713 Visited';s.className='cc-stat sd';}
-      const c=document.getElementById('ch'+n);
-      if(c)c.classList.add('done');
+// ── RENDER HOME ───────────────────────────────────────────────
+function renderHome() {
+  const {childName,childAge,parentName,avatar,xp,visited,saveCode} = P;
+  document.getElementById('tb-av').textContent   = avatar;
+  document.getElementById('tb-name').textContent = childName;
+  document.getElementById('tb-age').textContent  = 'Age ' + childAge;
+  document.getElementById('tb-xp').textContent   = '&#11088; ' + xp + ' XP';
+  document.getElementById('h-name').textContent  = childName;
+  document.getElementById('sync-code').textContent = saveCode || '------';
+
+  const subs = [
+    'Pick a chapter below and start learning about money!',
+    parentName + ' is cheering you on &#8212; what's next? &#127881;',
+    'You're on a roll! Keep going, money master! &#128640;'
+  ];
+  document.getElementById('h-sub').innerHTML =
+    visited.length === 0 ? subs[0] : visited.length === 1 ? subs[1] : subs[2];
+
+  const done = visited.length, total = 8;
+  document.getElementById('prog-txt').textContent = done + ' of ' + total + ' chapters visited';
+  document.getElementById('prog-bar').style.width = Math.round(done/total*100) + '%';
+
+  [1,2,3,4,5].forEach(n => {
+    if (visited.includes(n)) {
+      const s = document.getElementById('ch'+n+'-stat');
+      if (s) { s.textContent = '\u2713 Visited'; s.className = 'cc-stat sd'; }
+      const c = document.getElementById('ch'+n);
+      if (c) c.classList.add('done');
     }
   });
-  document.getElementById('buff-tip').textContent=TIPS[new Date().getDate()%TIPS.length];
+
+  document.getElementById('buff-tip').textContent = TIPS[new Date().getDate() % TIPS.length];
+}
+
+// ── INIT ──────────────────────────────────────────────────────
+async function init() {
+  try {
+    const saved = localStorage.getItem(LOCAL_KEY);
+    if (saved) {
+      P = {...P, ...JSON.parse(saved)};
+      // Silently refresh from Supabase in background
+      if (P.saveCode) {
+        fetchByCode(P.saveCode).then(row => {
+          if (row) {
+            P.xp      = row.xp;
+            P.visited = row.visited || [];
+            persistLocal();
+            if (document.getElementById('sh').classList.contains('active')) renderHome();
+          }
+        }).catch(() => {});
+      }
+      goHome();
+    } else {
+      show('sw');
+    }
+  } catch(e) {
+    show('sw');
+  }
 }
 
 init();
